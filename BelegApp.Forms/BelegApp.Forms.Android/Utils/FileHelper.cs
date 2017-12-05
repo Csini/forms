@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 
-using BelegApp.Forms.Backend;
-using BelegApp.Forms.Backend.Droid;
+using BelegApp.Forms.Utils;
+using BelegApp.Forms.Android.Utils;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileHelper))]
-namespace BelegApp.Forms.Backend.Droid
+namespace BelegApp.Forms.Android.Utils
 {
     public class FileHelper : IFileHelper
     {
