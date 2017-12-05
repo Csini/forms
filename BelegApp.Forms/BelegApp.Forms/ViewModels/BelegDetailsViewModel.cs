@@ -18,6 +18,7 @@ namespace BelegApp.Forms.ViewModels
         private string _type;
         private byte[] _thumbnail;
         private long? _belegSize;
+        private string _iconName;
         private decimal? _betrag;
 
         public BelegDetailsViewModel()
@@ -47,6 +48,7 @@ namespace BelegApp.Forms.ViewModels
             _type = beleg.Type;
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
+            _iconName = beleg.Status + ".png";
 
             InitCommands();
 
@@ -87,6 +89,14 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
+        public string IconName
+        {
+            get
+            {
+                return _iconName;
+            }
+        }
+
         public string Description
         {
             get
@@ -112,6 +122,19 @@ namespace BelegApp.Forms.ViewModels
                 if (Equals(_datum, value)) return;
                 _datum = value;
                 OnPropertyChanged(nameof(Datum));
+            }
+        }
+
+        public string DatumString
+        {
+            get
+            {
+                string result = null;
+                if (_datum.HasValue)
+                {
+                    result = _datum.Value.ToString("dd.MM.yyyy");
+                }
+                return result;
             }
         }
 

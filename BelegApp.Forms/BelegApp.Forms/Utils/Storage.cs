@@ -24,16 +24,23 @@ namespace BelegApp.Forms.Utils
             {
                 if (storage == null)
                 {
-                    storage = new Storage(DependencyService.Get<IFileHelper>().GetLocalFilePath("BelegSQLite.db3"));
+                    storage = new Storage();
                 }
                 return storage;
             }
         }
 
-        SQLiteAsyncConnection database;
+        private readonly IDependencyService _dependencyService;
 
-        public Storage(string dbPath)
+        private readonly SQLiteAsyncConnection database;
+
+        public Storage() : this(new DependencyServiceWrapper())
         {
+        }
+
+        public Storage(IDependencyService dependencyService)
+        {
+            string dbPath = dependencyService.Get<IFileHelper>().GetLocalFilePath("BelegSQLite.db3");
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<Beleg>().Wait();
         }
