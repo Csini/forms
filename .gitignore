@@ -4,3 +4,6 @@ packages/**/*
 **/obj/**/*
 **/*.user
 **/*.bak
+**/*.nuget.props
+**/*.nuget.targets
+**/project.lock.json
