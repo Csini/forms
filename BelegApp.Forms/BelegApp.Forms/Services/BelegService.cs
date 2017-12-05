@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BelegApp.Forms.Services
 {
-    class BelegService
+    static class BelegService
     {
         // Fest kodierte URL
-        private Uri serviceBaseUrl = new Uri("http://52.169.65.115:8080/belegerfassung-ui/rest/belege");
+        private static Uri serviceBaseUrl = new Uri("http://52.169.65.115:8080/belegerfassung-ui/rest/belege");
 
-        public async Task<string[]> GetTypeList()
+        public static async Task<string[]> GetTypeList()
         {
             string[] result = await WebRequester.HttpGet<string[]>(
                 serviceBaseUrl,
@@ -20,7 +20,7 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
-        public async Task<Beleg.StatusEnum[]> GetStatusList()
+        public static async Task<Beleg.StatusEnum[]> GetStatusList()
         {
             Beleg.StatusEnum[] result = await WebRequester.HttpGet<Beleg.StatusEnum[]>(
                 serviceBaseUrl,
@@ -28,7 +28,7 @@ namespace BelegApp.Forms.Services
             return result;
         }
         
-        public async Task<Beleg[]> GetBelegList(string user)
+        public static async Task<Beleg[]> GetBelegList(string user)
         {
             // Parameter prüfen
             if (string.IsNullOrWhiteSpace(user))
@@ -42,32 +42,32 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
-        public Beleg GetBeleg(string user, int belegnummer)
+        public static Beleg GetBeleg(string user, int belegnummer)
         {
             throw new NotImplementedException();
         }
 
-        public int CreateBeleg(string user, Beleg beleg)
+        public static int CreateBeleg(string user, Beleg beleg)
         {
             throw new NotImplementedException();
         }
 
-        public void SaveBeleg(string user, Beleg beleg)
+        public static void SaveBeleg(string user, Beleg beleg)
         {
             throw new NotImplementedException();
         }
 
-        public byte[] GetBelegImage(string user, int belegnummer)
+        public static byte[] GetBelegImage(string user, int belegnummer)
         {
             throw new NotImplementedException();
         }
 
-        public void SaveGelegImage(string user, int belegnummer, byte[] image)
+        public static void SaveGelegImage(string user, int belegnummer, byte[] image)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteBeleg(string user, int belegnummer)
+        public static void DeleteBeleg(string user, int belegnummer)
         {
             throw new NotImplementedException();
         }

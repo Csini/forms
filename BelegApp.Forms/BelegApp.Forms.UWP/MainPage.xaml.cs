@@ -22,11 +22,6 @@ namespace BelegApp.Forms.UWP
         {
             this.InitializeComponent();
 
-
-            BelegApp.Forms.Services.BelegService service = new BelegApp.Forms.Services.BelegService();
-            string[] types = service.GetTypeList().Result;
-            Beleg.StatusEnum[] statuses = service.GetStatusList().Result;
-
             LoadApplication(new BelegApp.Forms.App());
         }
     }
