@@ -87,7 +87,7 @@ namespace BelegApp.Forms.Models
         /// <param name="Status">Status des Beleges (required).</param>
         /// <param name="Thumbnail">Thumbnail-Darstellung des Beleges.</param>
         /// <param name="BelegSize">Groesse des Beleges.</param>
-        public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long Betrag = default(long), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
+        public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
         {
             // to ensure "Belegnummer" is required (not null)
             if (Belegnummer == null)
@@ -181,7 +181,7 @@ namespace BelegApp.Forms.Models
         /// </summary>
         /// <value>Betrag des Beleges</value>
         [DataMember(Name = "betrag", EmitDefaultValue = false)]
-        public string Betrag { get; set; }
+        public long? Betrag { get; set; }
 
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BelegApp.Forms.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace BelegApp.Forms.UWP
         public MainPage()
         {
             this.InitializeComponent();
+
+
+            BelegApp.Forms.Services.BelegService service = new BelegApp.Forms.Services.BelegService();
+            string[] types = service.GetTypeList().Result;
+            Beleg.StatusEnum[] statuses = service.GetStatusList().Result;
 
             LoadApplication(new BelegApp.Forms.App());
         }
