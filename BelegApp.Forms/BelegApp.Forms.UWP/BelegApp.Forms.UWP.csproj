@@ -109,6 +109,13 @@
     <None Include="BelegApp.Forms.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ABGELEHNT.png" />
+    <Content Include="buttons.png" />
+    <Content Include="ERFASST.png" />
+    <Content Include="EXPORTIERT.png" />
+    <Content Include="GEBUCHT.png" />
+    <Content Include="listbackground.jpg" />
+    <Content Include="money.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />
