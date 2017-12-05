@@ -12,7 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\BelegServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\BelegServiceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Storage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JsonFormatter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
