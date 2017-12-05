@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IO.Swagger.Model;
+using BelegApp.Forms.Models;
 
 namespace BelegApp.Forms.ViewModels
 {
