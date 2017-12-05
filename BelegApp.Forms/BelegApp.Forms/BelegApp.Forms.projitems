@@ -13,6 +13,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ImageServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Storage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JsonFormatter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
@@ -55,6 +56,5 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-   
   </ItemGroup>
 </Project>
