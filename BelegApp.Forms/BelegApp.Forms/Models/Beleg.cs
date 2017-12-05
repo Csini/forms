@@ -89,6 +89,7 @@ namespace BelegApp.Forms.Models
         /// <param name="BelegSize">Groesse des Beleges.</param>
         public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
         {
+            this.Belegnummer = Belegnummer;
              // to ensure "Description" is required (not null)
             if (Description == null)
             {
