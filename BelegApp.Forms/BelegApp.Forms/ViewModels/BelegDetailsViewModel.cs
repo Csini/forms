@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BelegApp.Forms.Models;
 using IO.Swagger.Model;
 using static IO.Swagger.Model.Beleg;
 
