@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
-using BelegApp.Forms.Backend.iOS;
+using BelegApp.Forms.iOS.Utils;
+using BelegApp.Forms.Utils;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileHelper))]
-namespace BelegApp.Forms.Backend.iOS
+namespace BelegApp.Forms.iOS.Utils
 {
     public class FileHelper : IFileHelper
     {

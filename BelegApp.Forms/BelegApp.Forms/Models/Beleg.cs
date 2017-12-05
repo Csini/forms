@@ -22,6 +22,8 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using SwaggerDateConverter = BelegApp.Forms.Utils.SwaggerDateConverter;
 
+using SQLite;
+
 namespace BelegApp.Forms.Models
 {
     /// <summary>
@@ -73,7 +75,7 @@ namespace BelegApp.Forms.Models
         /// Initializes a new instance of the <see cref="Beleg" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected Beleg() { }
+        public Beleg() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Beleg" /> class.
         /// </summary>
@@ -139,7 +141,7 @@ namespace BelegApp.Forms.Models
         /// Id des Beleges
         /// </summary>
         /// <value>Id des Beleges</value>
-        [DataMember(Name="belegnummer", EmitDefaultValue=false)]
+        [PrimaryKey, DataMember(Name="belegnummer", EmitDefaultValue=false)]
         public int? Belegnummer { get; set; }
 
         /// <summary>
