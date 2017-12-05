@@ -199,9 +199,9 @@ namespace BelegApp.Forms.Models
         public long? BelegSize { get; set; }
 
         /// <summary>
-        /// Gr��e des Beleges
+        /// Groesse des Beleges
         /// </summary>
-        /// <value>Gr��e des Beleges</value>
+        /// <value>Groesse des Beleges</value>
         [DataMember(Name = "image", EmitDefaultValue = false), JsonIgnore]
         public byte[] Image { get; set; }
 

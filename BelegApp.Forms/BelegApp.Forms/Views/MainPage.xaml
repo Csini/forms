@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BelegApp.Forms.Views.MainPage">
+             x:Class="BelegApp.Forms.Views.MainPage"
+           >
   <!--<ListView x:Name="MyListView"
             ItemsSource="{Binding Items}"
             ItemTapped="Handle_ItemTapped"
@@ -30,15 +31,27 @@
     </ListView.ItemTemplate>
     --><!--
   </ListView>-->
-
+    <ContentPage.Title>
+        Belege
+    </ContentPage.Title>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Add" Text="+" Priority="0" Command="{Binding AddNewBelegCommand}" />
+    </ContentPage.ToolbarItems>
 
     <ListView 
         SeparatorVisibility="None"
         HasUnevenRows="true"
-        ItemsSource="{Binding Path=Belege}">
+        ItemsSource="{Binding Path=Belege}"
+        ItemTapped="Handle_ItemTapped"
+        >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
+                    <ViewCell.ContextActions>
+                        <!--<MenuItem Clicked="" CommandParameter="{Binding .}" 
+                                  Text="More"/>-->
+                    </ViewCell.ContextActions>
                     <StackLayout BackgroundColor="#eee" Orientation="Vertical" Margin="0,2,0,2">
                         <Grid>
                             <Grid.RowDefinitions>

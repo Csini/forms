@@ -17,6 +17,8 @@ namespace BelegApp.Forms.ViewModels
         private long? _belegSize;
         private long? _betrag;
 
+        public BelegDetailsViewModel() { }
+
         public BelegDetailsViewModel(Beleg beleg)
         {
             if (beleg == null)
