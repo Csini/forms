@@ -167,6 +167,21 @@
     </Reference>
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\money.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\ABGELEHNT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\ERFASST.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\EXPORTIERT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\GEBUCHT.png" />
+  </ItemGroup>
   <Import Project="..\BelegApp.Forms\BelegApp.Forms.projitems" Label="Shared" Condition="Exists('..\BelegApp.Forms\BelegApp.Forms.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
