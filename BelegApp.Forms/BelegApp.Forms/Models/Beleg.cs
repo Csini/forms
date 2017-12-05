@@ -83,10 +83,11 @@ namespace BelegApp.Forms.Models
         /// <param name="Description">Beschreibung des Beleges (required).</param>
         /// <param name="Date">Belegdatum (required).</param>
         /// <param name="Type">Art des Beleges (required).</param>
+        /// <param name="Betrag">Betrag des Beleges (required).</param>
         /// <param name="Status">Status des Beleges (required).</param>
         /// <param name="Thumbnail">Thumbnail-Darstellung des Beleges.</param>
-        /// <param name="BelegSize">Gr��e des Beleges.</param>
-        public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), StatusEnum? Status = default(StatusEnum?), List<byte[]> Thumbnail = default(List<byte[]>), long? BelegSize = default(long?))
+        /// <param name="BelegSize">Groesse des Beleges.</param>
+        public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long Betrag = default(long), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
         {
             // to ensure "Belegnummer" is required (not null)
             if (Belegnummer == null)
@@ -123,6 +124,15 @@ namespace BelegApp.Forms.Models
             else
             {
                 this.Type = Type;
+            }
+            // to ensure "Betrag" is required (not null)
+            if (Betrag == null)
+            {
+                throw new InvalidDataException("Betrag is a required property for Beleg and cannot be null");
+            }
+            else
+            {
+                this.Betrag = Betrag;
             }
             // to ensure "Status" is required (not null)
             if (Status == null)
@@ -166,13 +176,20 @@ namespace BelegApp.Forms.Models
         [DataMember(Name="type", EmitDefaultValue=false)]
         public string Type { get; set; }
 
+        /// <summary>
+        /// Betrag des Beleges
+        /// </summary>
+        /// <value>Betrag des Beleges</value>
+        [DataMember(Name = "betrag", EmitDefaultValue = false)]
+        public string Betrag { get; set; }
+
 
         /// <summary>
         /// Thumbnail-Darstellung des Beleges
         /// </summary>
         /// <value>Thumbnail-Darstellung des Beleges</value>
         [DataMember(Name="thumbnail", EmitDefaultValue=false)]
-        public List<byte[]> Thumbnail { get; set; }
+        public byte[] Thumbnail { get; set; }
 
         /// <summary>
         /// Gr��e des Beleges
@@ -193,6 +210,7 @@ namespace BelegApp.Forms.Models
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  Betrag: ").Append(Betrag).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Thumbnail: ").Append(Thumbnail).Append("\n");
             sb.Append("  BelegSize: ").Append(BelegSize).Append("\n");
