@@ -14,10 +14,10 @@ namespace BelegApp.Forms
 		public App ()
 		{
 			InitializeComponent();
-
+            
             //MainPage = new BelegApp.Forms.MainPage();
-            MainPage = new BelegApp.Forms.Views.MainPage();
-            BelegMasterViewModel = new BelegMasterViewModel();
+            MainPage = new NavigationPage( new BelegApp.Forms.Views.MainPage());
+            BelegMasterViewModel = new BelegMasterViewModel(MainPage.Navigation);
             MainPage.BindingContext = BelegMasterViewModel;
 		}
 

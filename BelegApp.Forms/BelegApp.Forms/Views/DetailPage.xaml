@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BelegApp.Forms.Views.DetailPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!--Bezeichnung-->
+                <RowDefinition Height="Auto" /> <!--Art des Belegs-->
+                <RowDefinition Height="Auto" /> <!--Betrag-->
+                <RowDefinition Height="Auto" /> <!--Datum des Belegs-->
+            </Grid.RowDefinitions>
+
+            <Entry Grid.Column="0" Keyboard="Default" />
+            <Picker Grid.Column="1" />
+            <Entry Keyboard="Numeric" Grid.Column="2" />
+            <DatePicker Grid.Column="3" />
+
+        </Grid>
+        <!--<StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>-->
+    </ContentPage.Content>
+</ContentPage>

@@ -61,5 +61,10 @@ namespace BelegApp.Forms.Utils
         {
             return beleg.Belegnummer == null || beleg.Belegnummer.Value < 0;
         }
+
+        public Task<Beleg> GetBeleg(int belegnummer)
+        {
+            return database.Table<Beleg>().Where(beleg => beleg.Belegnummer == belegnummer).FirstAsync();
+        }
     }
 }
