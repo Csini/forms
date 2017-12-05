@@ -33,6 +33,9 @@ namespace BelegApp.Forms.Services
             }
 
             await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
+
+            beleg.Status = Beleg.StatusEnum.EXPORTIERT;
+            await Storage.Database.StoreBeleg(beleg);
         }
 
         public Task<int> RefreshStatus()
