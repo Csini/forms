@@ -485,7 +485,7 @@ namespace BelegApp.Forms.Utils
 			// Serviceaufruf durchführen
 			T result;
             HttpClient httpClient = new HttpClient();
-            string response = await httpClient.GetStringAsync(requestUrl);
+            string response = httpClient.GetStringAsync(requestUrl).Result;
 
 			// Response lesen und auswerten
 			result = JsonFormatter.FromJson<T>(response);
@@ -519,7 +519,7 @@ namespace BelegApp.Forms.Utils
             // Request ausführen
             HttpClient httpClient = new HttpClient();
             HttpContent httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await httpClient.PostAsync(requestUrl, httpContent);
+            HttpResponseMessage response = httpClient.PostAsync(requestUrl, httpContent).Result;
 
 			// Response lesen und auswerten
 			TResponse result;
@@ -561,7 +561,7 @@ namespace BelegApp.Forms.Utils
             // Request ausführen
             HttpClient httpClient = new HttpClient();
             HttpContent httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await httpClient.PutAsync(requestUrl, httpContent);
+            HttpResponseMessage response = httpClient.PutAsync(requestUrl, httpContent).Result;
 
             // Response lesen und auswerten
             TResponse result;
@@ -595,7 +595,7 @@ namespace BelegApp.Forms.Utils
 
             // Serviceaufruf durchführen
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.DeleteAsync(requestUrl);
+            HttpResponseMessage response = httpClient.DeleteAsync(requestUrl).Result;
 
             // Response lesen und auswerten
             if (!response.IsSuccessStatusCode)
