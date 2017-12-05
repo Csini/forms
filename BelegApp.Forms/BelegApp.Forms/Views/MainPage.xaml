@@ -95,7 +95,7 @@
                                     <!--Betrag-->
                                     <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" BackgroundColor="Black" TextColor="White" HorizontalTextAlignment="End"/>
                                     <!--Datum-->
-                                    <Label Text="{Binding Datum, StringFormat=dd.MM.yyyy}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
+                                    <Label Text="{Binding DatumString}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
                                     <!--Art-->
                                     <Label Text="{Binding Type}" FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
                                     <!--Status-->

@@ -100,6 +100,19 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
+        public string DatumString
+        {
+            get
+            {
+                string result = null;
+                if (_datum.HasValue)
+                {
+                    result = _datum.Value.ToString("dd.MM.yyyy");
+                }
+                return result;
+            }
+        }
+
         public string Type
         {
             get
