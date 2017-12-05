@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.BelegApp.Forms">
 	<uses-sdk android:minSdkVersion="15" />
-	<application android:label="BelegApp.Forms.Android"></application>
+	<application android:label="BelegApp.Forms.Android">
+    <provider android:name="android.support.v4.content.FileProvider"
+          android:authorities="BelegApp.Forms.fileprovider"
+          android:exported="false"
+          android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                 android:resource="@xml/file_paths"></meta-data>
+    </provider>
+  </application>
 </manifest>
