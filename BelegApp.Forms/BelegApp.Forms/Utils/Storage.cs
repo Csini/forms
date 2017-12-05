@@ -18,7 +18,7 @@ namespace BelegApp.Forms.Utils
 
         static Storage storage;
 
-        public Storage Database
+        public static Storage Database
         {
             get
             {
@@ -38,9 +38,9 @@ namespace BelegApp.Forms.Utils
             database.CreateTableAsync<Beleg>().Wait();
         }
 
-        public Task<List<Beleg>> GetBelege()
+        public Task<Beleg[]> GetBelege()
         {
-            return database.Table<Beleg>().ToListAsync();
+            return database.Table<Beleg>().ToListAsync().ContinueWith((lt) => lt.Result.ToArray());
         }
 
         public Task<int> StoreBeleg(Beleg beleg)
