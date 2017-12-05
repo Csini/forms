@@ -1,11 +1,14 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BelegApp.Forms.Backend
 {
     public class Beleg : IEquatable<Beleg>
     {
+        [PrimaryKey]
         public int? Belegnummer { get; set; }
 
         /// <summary>
@@ -56,37 +59,59 @@ namespace BelegApp.Forms.Backend
         }
     }
 
+    public interface IFileHelper
+    {
+        string GetLocalFilePath(string filename);
+    }
 
     public class Storage
     {
         static int idGenerator = -1;
 
-        IDictionary<int, Beleg> belege = new Dictionary<int, Beleg>();
+        static Storage storage;
 
-        public ICollection<Beleg> GetBelege()
+        public Storage Database
         {
-            return belege.Values;
+            get
+            {
+                if (storage == null)
+                {
+                    storage = new Storage(DependencyService.Get<IFileHelper>().GetLocalFilePath("BelegSQLite.db3"));
+                }
+                return storage;
+            }
         }
 
-        public void StoreBeleg(Beleg beleg)
+        SQLiteAsyncConnection database;
+
+        public Storage(string dbPath)
+        {
+            database = new SQLiteAsyncConnection(dbPath);
+            database.CreateTableAsync<Beleg>().Wait();
+        }
+
+        public Task<List<Beleg>> GetBelege()
+        {
+            return database.Table<Beleg>().ToListAsync();
+        }
+
+        public Task<int> StoreBeleg(Beleg beleg)
         {
             if (beleg.Belegnummer == null || !beleg.Belegnummer.HasValue)
             {
                 beleg.Belegnummer = idGenerator--;
             }
-            belege.Add(beleg.Belegnummer.Value, beleg);
+            return database.InsertOrReplaceAsync(beleg);
         }
 
-        public void RemoveBeleg(Beleg beleg)
+        public Task<int> RemoveBeleg(Beleg beleg)
         {
-            if (beleg.Belegnummer != null && beleg.Belegnummer.HasValue) {
-                belege.Remove(beleg.Belegnummer.Value);
-            }
+            return database.DeleteAsync(beleg);
         }
 
         public Boolean isNew(Beleg beleg)
         {
-            return beleg.Belegnummer != null && beleg.Belegnummer.Value < 0;
+            return beleg.Belegnummer == null || beleg.Belegnummer.Value < 0;
         }
     }
 }
