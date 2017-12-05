@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BelegApp.Forms.Models;
-using IO.Swagger.Model;
-using static IO.Swagger.Model.Beleg;
+using static BelegApp.Forms.Models.Beleg;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -16,6 +15,7 @@ namespace BelegApp.Forms.ViewModels
         private string _type;
         private byte[] _thumbnail;
         private long? _belegSize;
+        private long? _betrag;
 
         public BelegDetailsViewModel(Beleg beleg)
         {
@@ -113,6 +113,20 @@ namespace BelegApp.Forms.ViewModels
                 if (Equals(_belegSize, value)) return;
                 _belegSize = value;
                 OnPropertyChanged(nameof(BelegSize));
+            }
+        }
+
+        public long? Betrag
+        {
+            get
+            {
+                return _betrag;
+            }
+            set
+            {
+                if (Equals(_betrag, value)) return;
+                _betrag = value;
+                OnPropertyChanged(nameof(Betrag));
             }
         }
     }
