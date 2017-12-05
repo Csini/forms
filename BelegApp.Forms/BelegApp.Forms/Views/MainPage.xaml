@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BelegApp.Forms.Views.MainPage"
              BackgroundColor="DarkGray"
@@ -53,42 +57,58 @@
                         <!--<MenuItem Clicked="" CommandParameter="{Binding .}" 
                                   Text="More"/>-->
                     </ViewCell.ContextActions>
-                    <StackLayout BackgroundColor="#eee" Orientation="Vertical" Margin="0,2,0,2" StyleClass="Rounded">
-                        <Grid RowSpacing="0" ColumnSpacing="0">
+
+                    <Grid>
+                        <Image Source="buttons.png" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" HeightRequest="30" ></Image>
+
+                        <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
-                                <!--Bezeichnung, Betrag, Status-->
-                                <RowDefinition Height="Auto" />
-                                <!--Datum, Art, Status-->
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <!--Bezeichnung, Datum-->
-                                <ColumnDefinition Width="*"/>
-                                <!--Bezeichnung, Datum-->
-                                <ColumnDefinition Width="*"/>
-                                <!--Bezeichnung, Art-->
-                                <ColumnDefinition Width="*"/>
-                                <!--Betrag, Art-->
-                                <ColumnDefinition Width="50"/>
-                                <!--Status-->
-                            </Grid.ColumnDefinitions>
 
-                            <!--Bezeichnung-->
-                            <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
-                            <!--Betrag-->
-                            <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" BackgroundColor="Black" TextColor="White" HorizontalTextAlignment="End"/>
-                            <!--Datum-->
-                            <Label Text="{Binding Datum, StringFormat=dd.MM.yyyy}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
-                            <!--Art-->
-                            <Label Text="{Binding Type}" FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
-                            <!--Status-->
 
-                            <Image Source="{Binding IconName}" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" WidthRequest="50" StyleClass="Thumbnail"/>
 
+                            <StackLayout  Orientation="Vertical" Margin="0,2,0,2" Grid.Row="1">
+                                <Grid RowSpacing="0" ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <!--Bezeichnung, Betrag, Status-->
+                                        <RowDefinition Height="Auto" />
+                                        <!--Datum, Art, Status-->
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <!--Bezeichnung, Datum-->
+                                        <ColumnDefinition Width="*"/>
+                                        <!--Bezeichnung, Datum-->
+                                        <ColumnDefinition Width="*"/>
+                                        <!--Bezeichnung, Art-->
+                                        <ColumnDefinition Width="*"/>
+                                        <!--Betrag, Art-->
+                                        <ColumnDefinition Width="50"/>
+                                        <!--Status-->
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Bezeichnung-->
+                                    <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+                                    <!--Betrag-->
+                                    <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" BackgroundColor="Black" TextColor="White" HorizontalTextAlignment="End"/>
+                                    <!--Datum-->
+                                    <Label Text="{Binding Datum, StringFormat=dd.MM.yyyy}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
+                                    <!--Art-->
+                                    <Label Text="{Binding Type}" FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
+                                    <!--Status-->
+
+                                    <Image Source="{Binding IconName}" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" WidthRequest="50" StyleClass="Thumbnail"/>
+
+
+                                </Grid>
+                            </StackLayout>
 
                         </Grid>
-                    </StackLayout>
+                    </Grid>
+                  
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
