@@ -63,7 +63,7 @@
                             <!--Bezeichnung-->
                             <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
                             <!--Betrag-->
-                            <Label Text="999€" FontSize="Small" Grid.Column="3" Grid.Row="0" />
+                            <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" />
                             <!--Datum-->
                             <Label Text="{Binding Datum, StringFormat=dd.MM.yyyy}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
                             <!--Art-->
