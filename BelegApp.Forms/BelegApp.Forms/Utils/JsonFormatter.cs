@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace BelegApp.Utils
+namespace BelegApp.Forms.Utils
 {
 	/// <summary>
 	/// Diese Klasse stellt Funktionen zum Umwandeln von Objekten in JSON-Strings und umgekehrt zur Verfügung.

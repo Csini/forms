@@ -13,7 +13,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Storage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)JsonFormatter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\JsonFormatter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -21,7 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SwaggerDateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegDetailsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebRequester.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\WebRequester.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml">
