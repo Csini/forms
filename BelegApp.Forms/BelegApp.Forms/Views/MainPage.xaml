@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BelegApp.Forms.Views.MainPage">
+  <!--<ListView x:Name="MyListView"
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            CachingStrategy="RecycleElement">
+            
+    --><!--Built in Cells--><!--
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <TextCell Text="{Binding .}" />
+        </DataTemplate>
+    </ListView.ItemTemplate>
+    
+    --><!--Custom View Cells-->
+    <!--
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <StackLayout>
+            <Label Text="{Binding Text}" 
+                   Style="{DynamicResource ListItemTextStyle}" />
+            <Label Text="{Binding Detail}" 
+                   Style="{DynamicResource ListItemDetailTextStyle}"/>
+          </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    --><!--
+  </ListView>-->
+
+
+    <ListView 
+        SeparatorVisibility="None"
+        HasUnevenRows="true"
+        ItemsSource="{Binding Path=Belege}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout BackgroundColor="#eee" Orientation="Vertical" Margin="0,2,0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <!--Bezeichnung, Betrag, Status-->
+                                <RowDefinition Height="Auto" />
+                                <!--Datum, Art, Status-->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <!--Bezeichnung, Datum-->
+                                <ColumnDefinition Width="*"/>
+                                <!--Bezeichnung, Datum-->
+                                <ColumnDefinition Width="*"/>
+                                <!--Bezeichnung, Art-->
+                                <ColumnDefinition Width="*"/>
+                                <!--Betrag, Art-->
+                                <ColumnDefinition Width="*"/>
+                                <!--Status-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--Bezeichnung-->
+                            <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
+                            <!--Betrag-->
+                            <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" />
+                            <!--Datum-->
+                            <Label Text="{Binding Datum, StringFormat=dd.MM.yyyy}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
+                            <!--Art-->
+                            <Label Text="{Binding Type}" FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" />
+                            <!--Status-->
+                            <Label Text="{Binding Status}" FontSize="Micro" Grid.Column="4" Grid.Row="0" Grid.RowSpan="1" />
+
+
+                        </Grid>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
