@@ -529,6 +529,7 @@ namespace BelegApp.Forms.Utils
             {
                 // zu übertragende Daten sind ein byte[]
                 httpContent = new ByteArrayContent(payload as byte[]);
+                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
             }
             else
             {
