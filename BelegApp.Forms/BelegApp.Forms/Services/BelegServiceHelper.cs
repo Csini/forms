@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BelegApp.Forms.Utils
+namespace BelegApp.Forms.Services
 {
     public class BelegServiceHelper
     {
