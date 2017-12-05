@@ -4,11 +4,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using BelegApp.Forms.ExtensionMethods;
 
 namespace BelegApp.Forms.Utils
 {
     static class ImageServices
     {
+        /// <summary>
+        /// Ermöglicht das Aufnehmen eines Bildes über die Kamera, das automatisch in die Bildbibliothek gespeichert wird.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<MediaFile> CaptureImage()
         {
             await CrossMedia.Current.Initialize();
@@ -28,6 +33,10 @@ namespace BelegApp.Forms.Utils
             return mediaFile;
         }
 
+        /// <summary>
+        /// Öffnet die Auswahl eines Bildes aus der Bildbibliothek.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<MediaFile> SelectImage()
         {
             await CrossMedia.Current.Initialize();
