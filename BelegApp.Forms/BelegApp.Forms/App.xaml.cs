@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BelegApp.Forms.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,15 @@ namespace BelegApp.Forms
 {
 	public partial class App : Application
 	{
+        private BelegMasterViewModel _belegMasterViewModel;
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new BelegApp.Forms.MainPage();
+            //MainPage = new BelegApp.Forms.MainPage();
+            MainPage = new BelegApp.Forms.Views.MainPage();
+            BelegMasterViewModel = new BelegMasterViewModel();
+            MainPage.BindingContext = BelegMasterViewModel;
 		}
 
 		protected override void OnStart ()
@@ -30,5 +35,18 @@ namespace BelegApp.Forms
 		{
 			// Handle when your app resumes
 		}
+
+        public BelegMasterViewModel BelegMasterViewModel
+        {
+            get
+            {
+                return _belegMasterViewModel;
+            }
+            private set
+            {
+                if (Equals(_belegMasterViewModel, value)) return;
+                _belegMasterViewModel = value;
+            }
+        }
 	}
 }
