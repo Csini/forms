@@ -199,6 +199,13 @@ namespace BelegApp.Forms.Models
         public long? BelegSize { get; set; }
 
         /// <summary>
+        /// Gr��e des Beleges
+        /// </summary>
+        /// <value>Gr��e des Beleges</value>
+        [DataMember(Name = "image", EmitDefaultValue = false), JsonIgnore]
+        public byte[] Image { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
