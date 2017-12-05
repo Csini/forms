@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BelegApp.Forms.Services
 {
-    class BelegService
+    static class BelegService
     {
         // Fest kodierte URL
-        private Uri serviceBaseUrl = new Uri("http://52.169.65.115:8080/belegerfassung-ui/rest/belege");
+        private static Uri serviceBaseUrl = new Uri("http://52.169.65.115:8080/belegerfassung-ui/rest/belege");
 
-        public async Task<string[]> GetTypeList()
+        public static async Task<string[]> GetTypeList()
         {
             string[] result = await WebRequester.HttpGet<string[]>(
                 serviceBaseUrl,
@@ -20,7 +20,7 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
-        public async Task<Beleg.StatusEnum[]> GetStatusList()
+        public static async Task<Beleg.StatusEnum[]> GetStatusList()
         {
             Beleg.StatusEnum[] result = await WebRequester.HttpGet<Beleg.StatusEnum[]>(
                 serviceBaseUrl,
@@ -28,7 +28,7 @@ namespace BelegApp.Forms.Services
             return result;
         }
         
-        public async Task<Beleg[]> GetBelegList(string user)
+        public static async Task<Beleg[]> GetBelegList(string user)
         {
             // Parameter prüfen
             if (string.IsNullOrWhiteSpace(user))
@@ -42,34 +42,100 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
-        public Beleg GetBeleg(string user, int belegnummer)
+        public static async Task<Beleg> GetBeleg(string user, int belegnummer)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            Beleg result = await WebRequester.HttpGet<Beleg>(
+                serviceBaseUrl,
+                string.Format("/{0}/{1}", user, belegnummer));
+            return result;
         }
 
-        public int CreateBeleg(string user, Beleg beleg)
+        public static async Task<int> CreateBeleg(string user, Beleg beleg)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (beleg == null)
+            {
+                throw new ArgumentNullException(nameof(beleg));
+            }
+
+            int result = await WebRequester.HttpPost<Beleg, int>(
+                serviceBaseUrl,
+                string.Format("/{0}", user),
+                beleg);
+            return result;
         }
 
-        public void SaveBeleg(string user, Beleg beleg)
+        public static async Task SaveBeleg(string user, Beleg beleg)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (beleg == null)
+            {
+                throw new ArgumentNullException(nameof(beleg));
+            }
+
+            await WebRequester.HttpPut<Beleg, object>(
+                serviceBaseUrl,
+                string.Format("/{0}/{1}", user, beleg.Belegnummer),
+                beleg);
         }
 
-        public byte[] GetBelegImage(string user, int belegnummer)
+        public static async Task<byte[]> GetBelegImage(string user, int belegnummer)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            byte[] result = await WebRequester.HttpGet<byte[]>(
+                serviceBaseUrl,
+                string.Format("/{0}/{1}", user, belegnummer));
+            return result;
         }
 
-        public void SaveGelegImage(string user, int belegnummer, byte[] image)
+        public static async Task SaveBelegImage(string user, int belegnummer, byte[] image)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+
+            await WebRequester.HttpPut<byte[], object>(
+                serviceBaseUrl,
+                string.Format("/{0}/{1}", user, belegnummer),
+                image);
         }
 
-        public void DeleteBeleg(string user, int belegnummer)
+        public static async Task DeleteBeleg(string user, int belegnummer)
         {
-            throw new NotImplementedException();
+            // Parameter prüfen
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            await WebRequester.HttpDelete(
+                serviceBaseUrl,
+                string.Format("/{0}/{1}", user, belegnummer));
         }
     }
 }
