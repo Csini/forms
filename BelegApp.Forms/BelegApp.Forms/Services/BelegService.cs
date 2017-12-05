@@ -105,7 +105,7 @@ namespace BelegApp.Forms.Services
 
             byte[] result = await WebRequester.HttpGet<byte[]>(
                 serviceBaseUrl,
-                string.Format("/{0}/{1}", user, belegnummer));
+                string.Format("/{0}/{1}/beleg", user, belegnummer));
             return result;
         }
 
@@ -123,7 +123,7 @@ namespace BelegApp.Forms.Services
 
             await WebRequester.HttpPut<byte[], object>(
                 serviceBaseUrl,
-                string.Format("/{0}/{1}", user, belegnummer),
+                string.Format("/{0}/{1}/beleg", user, belegnummer),
                 image);
         }
 
