@@ -16,6 +16,7 @@ namespace BelegApp.Forms.ViewModels
         private byte[] _thumbnail;
         private long? _belegSize;
         private long? _betrag;
+        private string _iconName;
 
         public BelegDetailsViewModel() { }
 
@@ -31,6 +32,7 @@ namespace BelegApp.Forms.ViewModels
             _type = beleg.Type;
             /*_thumbnail = */
             _belegSize = beleg.BelegSize;
+            _iconName = beleg.Status + ".png";
 
         }
 
@@ -59,6 +61,14 @@ namespace BelegApp.Forms.ViewModels
                 if (Equals(_statusEnum, value)) return;
                 _statusEnum = value;
                 OnPropertyChanged(nameof(Status));
+            }
+        }
+
+        public string IconName
+        {
+            get
+            {
+                return _iconName;
             }
         }
 
