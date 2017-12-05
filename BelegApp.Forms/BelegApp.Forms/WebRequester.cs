@@ -1,5 +1,4 @@
-﻿using CeTraSS.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,7 +38,7 @@ namespace CeTraSS.Client
 		/// <returns>Ergebnis des Serviceaufrufes.</returns>
 		public static T HttpGet<T>(
 			string baseUrl,
-			string action) where T : ResultModelBase
+			string action)
 		{
 			// Service aufrufen
 			T result = HttpGet<T>(baseUrl, action, null);
@@ -61,7 +60,7 @@ namespace CeTraSS.Client
 		public static T HttpGet<T>(
 			string baseUrl,
 			string action,
-			IDictionary<string, string> queryItems) where T : ResultModelBase
+			IDictionary<string, string> queryItems)
 		{
 			// Parameter prüfen
 			if (string.IsNullOrWhiteSpace(baseUrl))
@@ -90,7 +89,7 @@ namespace CeTraSS.Client
 		/// <returns>Ergebnis des Serviceaufrufes.</returns>
 		public static T HttpGet<T>(
 			Uri baseUrl,
-			string action) where T : ResultModelBase
+			string action)
 		{
 			// Service aufrufen
 			T result = HttpGet<T>(baseUrl, action, null);
@@ -112,7 +111,7 @@ namespace CeTraSS.Client
 		public static T HttpGet<T>(
 			Uri baseUrl,
 			string action,
-			IDictionary<string, string> queryItems) where T : ResultModelBase
+			IDictionary<string, string> queryItems)
 		{
 			// Parameter prüfen
 			if (null == baseUrl)
@@ -146,7 +145,7 @@ namespace CeTraSS.Client
 		public static TResponse HttpPost<TRequest, TResponse>(
 			string baseUrl,
 			string action,
-			TRequest payload) where TResponse : ResultModelBase
+			TRequest payload)
 		{
 			// Request ausführen
 			TResponse result = HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
@@ -171,7 +170,7 @@ namespace CeTraSS.Client
 			string baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
-			TRequest payload) where TResponse : ResultModelBase
+			TRequest payload)
 		{
 			// Parameter prüfen
 			if (string.IsNullOrWhiteSpace(baseUrl))
@@ -204,7 +203,7 @@ namespace CeTraSS.Client
 		public static TResponse HttpPost<TRequest, TResponse>(
 			Uri baseUrl,
 			string action,
-			TRequest payload) where TResponse : ResultModelBase
+			TRequest payload)
 		{
 			// Request ausführen
 			TResponse result = HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
@@ -230,7 +229,7 @@ namespace CeTraSS.Client
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
-			TRequest payload) where TResponse : ResultModelBase
+			TRequest payload)
 		{
 			// Parameter prüfen
 			if (null == baseUrl)
@@ -263,7 +262,7 @@ namespace CeTraSS.Client
 		private static T httpGet<T>(
 			Uri baseUrl,
 			string action,
-			IDictionary<string, string> queryItems) where T : ResultModelBase
+			IDictionary<string, string> queryItems)
 		{
 			// Action und QueryItems zur URL hinzufügen
 			Uri requestUrl = buildUrl(baseUrl, action, queryItems);
@@ -283,8 +282,6 @@ namespace CeTraSS.Client
 			{
 				StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
 				result = JsonFormatter.FromJson<T>("{}");
-				result.IsErrorResult = true;
-				result.ErrorDetails = reader.ReadToEnd();
 			} // catch (WebException ex)
 
 			return result;
@@ -304,7 +301,7 @@ namespace CeTraSS.Client
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
-			TRequest payload) where TResponse : ResultModelBase
+			TRequest payload)
 		{
 			// Action und QueryItems zur URL hinzufügen
 			Uri requestUrl = buildUrl(baseUrl, action, queryItems);
@@ -343,8 +340,6 @@ namespace CeTraSS.Client
 			{
 				StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
 				result = JsonFormatter.FromJson<TResponse>("{}");
-				result.IsErrorResult = true;
-				result.ErrorDetails = reader.ReadToEnd();
 			} // catch (WebException ex)
 
 			return result;
