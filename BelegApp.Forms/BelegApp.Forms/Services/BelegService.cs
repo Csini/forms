@@ -12,6 +12,8 @@ namespace BelegApp.Forms.Services
         // Fest kodierte URL
         private static Uri serviceBaseUrl = new Uri("http://52.169.65.115:8080/belegerfassung-ui/rest/belege");
 
+        public const string USER = "forms";
+
         public static async Task<string[]> GetTypeList()
         {
             string[] result = await WebRequester.HttpGet<string[]>(
