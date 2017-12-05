@@ -8,14 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BelegApp.Forms.Android", "BelegApp.Forms\BelegApp.Forms.Android\BelegApp.Forms.Android.csproj", "{0CF14DDE-56D7-4DFD-82C6-E34AF7E7CEDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BelegApp.Forms.iOS", "BelegApp.Forms\BelegApp.Forms.iOS\BelegApp.Forms.iOS.csproj", "{2A76C415-AB45-4A82-85C1-18801A1E6EB0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3B248207-230A-4002-AE4A-10D099C8ECD6} = {3B248207-230A-4002-AE4A-10D099C8ECD6}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BelegApp.Forms.UWP", "BelegApp.Forms\BelegApp.Forms.UWP\BelegApp.Forms.UWP.csproj", "{0ACD00FC-C540-4975-8988-388328E2C4DB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3B248207-230A-4002-AE4A-10D099C8ECD6} = {3B248207-230A-4002-AE4A-10D099C8ECD6}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IO.Swagger", "BelegApp.Forms\IO.Swagger\IO.Swagger.csproj", "{3B248207-230A-4002-AE4A-10D099C8ECD6}"
 EndProject

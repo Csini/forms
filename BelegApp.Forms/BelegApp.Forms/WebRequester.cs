@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace CeTraSS.Client
+namespace BelegApp.Utils
 {
 	/// <summary>
 	/// Diese Klasse stellt Funktionen zur Verfügung, um die Serviceaufrufe einfach durchführen zu können.
@@ -36,28 +37,28 @@ namespace CeTraSS.Client
 		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
 		/// </exception>
 		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static T HttpGet<T>(
+		public async static Task<T> HttpGet<T>(
 			string baseUrl,
 			string action)
 		{
 			// Service aufrufen
-			T result = HttpGet<T>(baseUrl, action, null);
+			T result = await HttpGet<T>(baseUrl, action, null);
 			return result;
-		} // public static T HttpGet<T>( ...
+        } // public static Task<T> HttpGet<T>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch.
-		/// </summary>
-		/// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static T HttpGet<T>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch.
+        /// </summary>
+        /// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<T> HttpGet<T>(
 			string baseUrl,
 			string action,
 			IDictionary<string, string> queryItems)
@@ -72,43 +73,43 @@ namespace CeTraSS.Client
 			Uri uri = new Uri(baseUrl);
 
 			// Service aufrufen
-			T result = HttpGet<T>(uri, action, queryItems);
+			T result = await HttpGet<T>(uri, action, queryItems);
 			return result;
-		} // public static T HttpGet<T>( ...
+        } // public async static Task<T> HttpGet<T>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch.
-		/// </summary>
-		/// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static T HttpGet<T>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch.
+        /// </summary>
+        /// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<T> HttpGet<T>(
 			Uri baseUrl,
 			string action)
 		{
 			// Service aufrufen
-			T result = HttpGet<T>(baseUrl, action, null);
+			T result = await HttpGet<T>(baseUrl, action, null);
 			return result;
-		} // public static T HttpGet<T>( ...
+        } // public async static Task<T> HttpGet<T>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch.
-		/// </summary>
-		/// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static T HttpGet<T>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch.
+        /// </summary>
+        /// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<T> HttpGet<T>(
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems)
@@ -124,49 +125,49 @@ namespace CeTraSS.Client
 			} // if (string.IsNullOrEmpty(action))
 
 			// Service aufrufen
-			T result = httpGet<T>(baseUrl, action, queryItems);
+			T result = await httpGet<T>(baseUrl, action, queryItems);
 			return result;
-		} // public static T HttpGet<T>( ...
-		#endregion
-		#region HttpPost
-		/// <summary>
-		/// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
-		/// </summary>
-		/// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
-		/// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static TResponse HttpPost<TRequest, TResponse>(
+        } // public async static Task<T> HttpGet<T>( ...
+        #endregion
+        #region HttpPost
+        /// <summary>
+        /// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
+        /// </summary>
+        /// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
+        /// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<TResponse> HttpPost<TRequest, TResponse>(
 			string baseUrl,
 			string action,
 			TRequest payload)
 		{
 			// Request ausführen
-			TResponse result = HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
+			TResponse result = await HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
 			return result;
-		} // public static TResponse HttpPost<TRequest, TResponse>( ...
+        } // public async static Task<TResponse> HttpPost<TRequest, TResponse>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
-		/// </summary>
-		/// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
-		/// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static TResponse HttpPost<TRequest, TResponse>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
+        /// </summary>
+        /// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
+        /// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> oder leer ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<TResponse> HttpPost<TRequest, TResponse>(
 			string baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
@@ -182,50 +183,50 @@ namespace CeTraSS.Client
 			Uri uri = new Uri(baseUrl);
 
 			// Request ausführen
-			TResponse result = HttpPost<TRequest, TResponse>(uri, action, queryItems, payload);
+			TResponse result = await HttpPost<TRequest, TResponse>(uri, action, queryItems, payload);
 			return result;
-		} // public static TResponse HttpPost<TRequest, TResponse>( ...
+        } // public async static Task<TResponse> HttpPost<TRequest, TResponse>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
-		/// </summary>
-		/// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
-		/// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="payload"/> <i>null</i> ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static TResponse HttpPost<TRequest, TResponse>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
+        /// </summary>
+        /// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
+        /// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="payload"/> <i>null</i> ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<TResponse> HttpPost<TRequest, TResponse>(
 			Uri baseUrl,
 			string action,
 			TRequest payload)
 		{
 			// Request ausführen
-			TResponse result = HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
+			TResponse result = await HttpPost<TRequest, TResponse>(baseUrl, action, null, payload);
 			return result;
-		} // public static TResponse HttpPost<TRequest, TResponse>( ...
+        } // public async static Task<TResponse> HttpPost<TRequest, TResponse>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
-		/// </summary>
-		/// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
-		/// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
-		/// Wird ausgelöst, wenn der Parameter <paramref name="payload"/> <i>null</i> ist.
-		/// </exception>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		public static TResponse HttpPost<TRequest, TResponse>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
+        /// </summary>
+        /// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
+        /// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Wird ausgelöst, wenn der Parameter <paramref name="baseUrl"/> <i>null</i> ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="action"/> <i>null</i> oder leer ist.
+        /// Wird ausgelöst, wenn der Parameter <paramref name="payload"/> <i>null</i> ist.
+        /// </exception>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        public async static Task<TResponse> HttpPost<TRequest, TResponse>(
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
@@ -246,20 +247,20 @@ namespace CeTraSS.Client
 			} // if (null == payload)
 
 			// Request ausführen
-			TResponse result = httpPost<TRequest, TResponse>(baseUrl, action, queryItems, payload);
+			TResponse result = await httpPost<TRequest, TResponse>(baseUrl, action, queryItems, payload);
 			return result;
-		} // public static TResponse HttpPost<TRequest, TResponse>( ...
-		#endregion
-		#region Private Hilfsfunktionen
-		/// <summary>
-		/// Führt den Serviceaufruf durch.
-		/// </summary>
-		/// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		private static T httpGet<T>(
+        } // public async static Task<TResponse> HttpPost<TRequest, TResponse>( ...
+        #endregion
+        #region Private Hilfsfunktionen
+        /// <summary>
+        /// Führt den Serviceaufruf durch.
+        /// </summary>
+        /// <typeparam name="T">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        private async static Task<T> httpGet<T>(
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems)
@@ -269,35 +270,26 @@ namespace CeTraSS.Client
 
 			// Serviceaufruf durchführen
 			T result;
-			try
-			{
-				WebRequest webRequest = WebRequest.Create(requestUrl);
-				webRequest.Credentials = CredentialCache.DefaultNetworkCredentials;
-				WebResponse webResponse = webRequest.GetResponse();
+            HttpClient httpClient = new HttpClient();
+            string response = await httpClient.GetStringAsync(requestUrl);
 
-				// Response lesen und auswerten
-				result = JsonFormatter.FromJson<T>(webResponse.GetResponseStream());
-			} // try
-			catch (WebException ex)
-			{
-				StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
-				result = JsonFormatter.FromJson<T>("{}");
-			} // catch (WebException ex)
+			// Response lesen und auswerten
+			result = JsonFormatter.FromJson<T>(response);
 
 			return result;
-		} // private static T httpGet<T>( ...
+        } // private async static Task<T> httpGet<T>( ...
 
-		/// <summary>
-		/// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
-		/// </summary>
-		/// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
-		/// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
-		/// <returns>Ergebnis des Serviceaufrufes.</returns>
-		private static TResponse httpPost<TRequest, TResponse>(
+        /// <summary>
+        /// Führt den Serviceaufruf durch wobei Daten mitgegeben werden können.
+        /// </summary>
+        /// <typeparam name="TRequest">Typ, der als Daten mitgegeben wird.</typeparam>
+        /// <typeparam name="TResponse">Typ, der als Ergebnis des Services erwartet wird.</typeparam>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <param name="payload">[in] Zusatzdaten, die beim Aufruf mitgegeben werden sollen</param>
+        /// <returns>Ergebnis des Serviceaufrufes.</returns>
+        private async static Task<TResponse> httpPost<TRequest, TResponse>(
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems,
@@ -310,49 +302,33 @@ namespace CeTraSS.Client
 			string payloadString = JsonFormatter.ToJson<TRequest>(payload);
 			Byte[] payloadBytes = Encoding.UTF8.GetBytes(payloadString);
 
-			// Request ausführen
-			WebRequest webRequest = WebRequest.Create(requestUrl);
-			webRequest.Credentials = CredentialCache.DefaultNetworkCredentials;
-			webRequest.Method = "POST";
-			webRequest.ContentLength = payloadBytes.Length;
-			webRequest.ContentType = "application/json";
-			using
-				(Stream payloadStream = webRequest.GetRequestStream())
-			{
-				payloadStream.Write(payloadBytes, 0, payloadBytes.Length);
-			} // using (Stream)
+            // Request ausführen
+            HttpClient httpClient = new HttpClient();
+            HttpContent httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await httpClient.PostAsync(requestUrl, httpContent);
 
 			// Response lesen und auswerten
 			TResponse result;
-			try
-			{
-				using
-					(WebResponse webResponse = webRequest.GetResponse())
-				{
-					using
-						(Stream responseStream = webResponse.GetResponseStream())
-					{
-						result = JsonFormatter.FromJson<TResponse>(responseStream);
-					} // using (Stream)
-				} // using (WebResponse)
-			}
-			catch (WebException ex)
-			{
-				StreamReader reader = new StreamReader(ex.Response.GetResponseStream());
-				result = JsonFormatter.FromJson<TResponse>("{}");
-			} // catch (WebException ex)
+            if (response.IsSuccessStatusCode)
+            {
+                result = JsonFormatter.FromJson<TResponse>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
 
 			return result;
-		} // private static TResponse httpPost<TRequest, TResponse>( ...
+        } // private async static Task<TResponse> httpPost<TRequest, TResponse>( ...
 
-		/// <summary>
-		/// Erzeugt die URL, die letztelich für den Serviceaufruf verwendet wird.
-		/// </summary>
-		/// <param name="baseUrl">[in] Basis-URL des Services</param>
-		/// <param name="action">[in] Name der Serviceaktion</param>
-		/// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
-		/// <returns>URL für den Serviceaufruf.</returns>
-		private static Uri buildUrl(
+        /// <summary>
+        /// Erzeugt die URL, die letztelich für den Serviceaufruf verwendet wird.
+        /// </summary>
+        /// <param name="baseUrl">[in] Basis-URL des Services</param>
+        /// <param name="action">[in] Name der Serviceaktion</param>
+        /// <param name="queryItems">[in] Liste der zusätzlichen Aufrufparameter</param>
+        /// <returns>URL für den Serviceaufruf.</returns>
+        private static Uri buildUrl(
 			Uri baseUrl,
 			string action,
 			IDictionary<string, string> queryItems)
