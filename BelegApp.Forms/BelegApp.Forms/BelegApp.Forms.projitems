@@ -14,6 +14,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods\MediaFileExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IDependencyService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImageServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Storage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JsonFormatter.cs" />
