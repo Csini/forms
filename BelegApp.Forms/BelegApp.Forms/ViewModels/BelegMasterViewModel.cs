@@ -1,4 +1,5 @@
 ﻿using BelegApp.Forms.Models;
+using BelegApp.Forms.Services;
 using BelegApp.Forms.Utils;
 using BelegApp.Forms.Views;
 using System;
@@ -25,7 +26,6 @@ namespace BelegApp.Forms.ViewModels
             {
                 navigation.PushAsync(new DetailPage(null, navigation));
             });
-
             
             Belege = new ObservableCollection<BelegDetailsViewModel>(); // Ladeoperation von Service
 
@@ -56,6 +56,5 @@ namespace BelegApp.Forms.ViewModels
         public ICommand ExportBelegeCommand { get; private set; }
         public ICommand SelectBelegeCommand { get; private set; }
         public ICommand DeleteBelegeCommand { get; private set; }
-        public ICommand RefreshCommand { get; private set; }
     }
 }
