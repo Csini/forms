@@ -32,8 +32,6 @@
         ItemTapped="Handle_ItemTapped"
         Refreshing="Handle_Refreshing"
         Margin="0,50,0,50"
-         IsGroupingEnabled="true" 
-           GroupDisplayBinding="{Binding Type}"
         >
         <ListView.ItemTemplate>
             <DataTemplate>
