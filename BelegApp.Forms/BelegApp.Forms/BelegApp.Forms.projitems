@@ -23,6 +23,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SwaggerDateConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\WebRequester.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationRule\IsNotNullOrEmptyRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationRule\IValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationRule\ValidatableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegDetailsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegMasterViewModel.cs" />

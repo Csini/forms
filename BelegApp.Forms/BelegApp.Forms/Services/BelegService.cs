@@ -109,7 +109,7 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
-        public static async Task SaveBelegImage(string user, int belegnummer, byte[] image)
+        public static async Task<byte[]> SaveBelegImage(string user, int belegnummer, byte[] image)
         {
             // Parameter prüfen
             if (string.IsNullOrWhiteSpace(user))
@@ -121,10 +121,11 @@ namespace BelegApp.Forms.Services
                 throw new ArgumentNullException(nameof(image));
             }
 
-            await WebRequester.HttpPut<byte[], object>(
+            byte[] result = await WebRequester.HttpPut<byte[], byte[]>(
                 serviceBaseUrl,
                 string.Format("/{0}/{1}/beleg", user, belegnummer),
                 image);
+            return result;
         }
 
         public static async Task DeleteBeleg(string user, int belegnummer)

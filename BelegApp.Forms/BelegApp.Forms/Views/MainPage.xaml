@@ -70,7 +70,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!--Bezeichnung-->
-                                    <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+                                    <Label Text="{Binding Description}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
                                     <!--Betrag-->
                                     <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" TextColor="Black" HorizontalTextAlignment="End" StyleClass="Header" Font="Bold" />
                                     <!--Datum-->
