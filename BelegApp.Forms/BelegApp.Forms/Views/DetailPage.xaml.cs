@@ -43,5 +43,25 @@ namespace BelegApp.Forms.Views
             //    ctl.Text = "300";
 
         }
+
+        private async void StartCamera(object sender, EventArgs args)
+        {
+            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+            if (photo != null)
+            {
+                var xxx = ImageSource.FromStream(() => { return photo.GetStream(); });
+            }
+        }
+
+        private async void SelectPicture(object sender, EventArgs args)
+        {
+            var photo = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions(){ });
+
+            if (photo != null)
+            {
+                var xxx = ImageSource.FromStream(() => { return photo.GetStream(); });
+            }
+        }
     }
 }

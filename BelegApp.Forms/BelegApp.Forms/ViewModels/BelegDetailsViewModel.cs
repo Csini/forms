@@ -90,7 +90,30 @@ namespace BelegApp.Forms.ViewModels
                 if (result > 0)
                     Callback();
             }, () => CanSave);
+
+            StartCameraCommand = new Command(async () =>
+            {
+                var img = await ImageServices.CaptureImage();
+                Thumbnail = ConvertStreamToByteArray(img);
+            });
+
+            SelectPictureCommand = new Command(async () =>
+            {
+                var img = await ImageServices.SelectImage();
+                Thumbnail = ConvertStreamToByteArray(img);
+            });
+
             AddValidations();
+        }
+
+        private byte[] ConvertStreamToByteArray(Plugin.Media.Abstractions.MediaFile img)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                img.GetStream().CopyTo(memoryStream);
+                img.Dispose();
+                return memoryStream.ToArray();
+            }
         }
 
         public int? Belegnummer
@@ -369,6 +392,8 @@ namespace BelegApp.Forms.ViewModels
 
         public ICommand SaveBelegCommand { get; private set; }
 
+        public ICommand StartCameraCommand { get; private set; }
+        public ICommand SelectPictureCommand { get; private set; }
         private void AddValidations()
         {
             _validatableLabel.Validations.Add(new IsNotNullOrEmptyRule<string>

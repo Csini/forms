@@ -92,9 +92,9 @@ namespace BelegApp.Forms.Views
             await getDatabaseBelegList();
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            refreshBelegList();
+            await refreshBelegList();
         }
     }
 }
