@@ -35,7 +35,5 @@ namespace BelegApp.Forms
 		{
             StaticValues.UpdateStaticValues();
         }
-
-
 	}
 }
