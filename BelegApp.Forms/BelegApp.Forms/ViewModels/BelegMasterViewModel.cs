@@ -53,10 +53,15 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (!selectMode) { return; }
 
-                Beleg[] selectedBelege = null; //TODO filter alle selektierten Belege
-                int[] belegNummern = null;//
+                Beleg[] selectedBelege = new Beleg[0]; //TODO filter alle selektierten Belege
+                int[] belegNummern = new int[selectedBelege.Length];
+                for (int ix = 0; ix < selectedBelege.Length; ++ix)
+                {
+                    belegNummern[ix] = selectedBelege[ix].Belegnummer.Value;
+                }
 
                 await BelegService.DeleteBelege(BelegService.USER, belegNummern);
+                await Storage.Database.RemoveBelege(selectedBelege);
 
                 resetSelectedBelege();
                 selectMode = false;
