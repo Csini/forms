@@ -285,7 +285,5 @@ namespace BelegApp.Forms.ViewModels
             return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
 
-        public ICommand SaveBelegCommand { get; private set; }
-
     }
 }
