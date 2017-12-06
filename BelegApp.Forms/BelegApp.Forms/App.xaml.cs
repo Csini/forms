@@ -54,7 +54,7 @@ namespace BelegApp.Forms
         private async Task getBelegList()
         {
             // Belegliste online holen
-            Beleg[] belegList = await BelegService.GetBelegList(BelegService.USER);
+            Beleg[] belegList = Storage.Database.GetBelege().Result;
             BelegMasterViewModel = new BelegMasterViewModel(MainPage.Navigation, belegList);
             MainPage.BindingContext = BelegMasterViewModel;
         }

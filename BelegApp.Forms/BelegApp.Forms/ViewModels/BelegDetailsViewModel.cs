@@ -6,6 +6,7 @@ using static BelegApp.Forms.Models.Beleg;
 using BelegApp.Forms.Utils;
 using System.Windows.Input;
 using Xamarin.Forms;
+using BelegApp.Forms.ValidationRule;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -13,9 +14,9 @@ namespace BelegApp.Forms.ViewModels
     {
         private int? _belegNummer;
         private StatusEnum? _statusEnum;
-        private string _description;
+        private ValidatableObject<string> _validatableDescription;
         private DateTime? _datum;
-        private string _type;
+        private ValidatableObject<string> _validatableType;
         private byte[] _thumbnail;
         private long? _belegSize;
         private string _iconName;
@@ -23,17 +24,11 @@ namespace BelegApp.Forms.ViewModels
 
         public BelegDetailsViewModel()
         {
-            InitCommands();
-        }
-
-        private void InitCommands()
-        {
-            SaveBelegCommand = new Command(() =>
-            {
-                var result = Storage.Database.StoreBeleg(this.GetBusinessObject()).Result;
-                if (result < 0)
-                    Callback();
-            });
+            Status = StatusEnum.ERFASST;
+            Datum = DateTime.Now;
+            _validatableDescription = new ValidatableObject<string>(true);
+            _validatableType = new ValidatableObject<string>(true);
+            Init();
         }
 
         public BelegDetailsViewModel(Beleg beleg)
@@ -43,22 +38,37 @@ namespace BelegApp.Forms.ViewModels
 
             Belegnummer = beleg.Belegnummer;
             _statusEnum = beleg.Status;
-            _description = beleg.Description;
+            _validatableDescription = new ValidatableObject<string>(true);
+            Description = beleg.Description;
             _datum = beleg.Date;
-            _type = beleg.Type;
+            _validatableType = new ValidatableObject<string>(true);
+            Type = beleg.Type;
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
 
-            InitCommands();
+            Init();
+        }
 
+        private void Init()
+        {
             PropertyChanged += (s, e) =>
             {
                 // Update IsEditable
                 if (e.PropertyName == nameof(Status))
                     OnPropertyChanged(nameof(IsEditable));
-
+                if (e.PropertyName == nameof(Description) || e.PropertyName == nameof(Type))
+                    ((Command)SaveBelegCommand).ChangeCanExecute();
+                //OnPropertyChanged(nameof(CanSave));
             };
+
+            SaveBelegCommand = new Command(() =>
+            {
+                var result = Storage.Database.StoreBeleg(this.GetBusinessObject()).Result;
+                if (result > 0)
+                    Callback();
+            }, () => CanSave);
+            AddValidations();
         }
 
         public int? Belegnummer
@@ -101,12 +111,26 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
-                return _description;
+                return ValidatableDescription.Value;
             }
             set
             {
-                if (Equals(_description, value)) return;
-                _description = value;
+                if (Equals(ValidatableDescription.Value, value)) return;
+                ValidatableDescription.Value = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+
+        public ValidatableObject<string> ValidatableDescription
+        {
+            get
+            {
+                return _validatableDescription;
+            }
+            set
+            {
+                //if (Equals(_description, value)) return;
+                _validatableDescription = value;
                 OnPropertyChanged(nameof(Description));
             }
         }
@@ -142,13 +166,26 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
-                return _type;
+                return ValidatableType.Value;
+            }
+            set {
+                if (Equals(ValidatableType.Value, value)) return;
+                ValidatableType.Value = value;
+                OnPropertyChanged(nameof(Type));
+            }
+        }
+
+        public ValidatableObject<string> ValidatableType
+        {
+            get
+            {
+                return _validatableType;
             }
             set
             {
-                if (Equals(_type, value)) return;
-                _type = value;
-                OnPropertyChanged(nameof(Type));
+                if (Equals(_validatableType, value)) return;
+                _validatableType = value;
+                OnPropertyChanged(nameof(ValidatableType));
             }
         }
 
@@ -203,6 +240,17 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
+        public bool CanSave
+        {
+            get
+            {
+                ValidatableDescription.Validate();
+                ValidatableType.Validate();
+                return
+                    ValidatableDescription.IsValid && ValidatableType.IsValid;
+            }
+        }
+
         public List<string> Types
         {
             get
@@ -215,6 +263,17 @@ namespace BelegApp.Forms.ViewModels
 
         public ICommand SaveBelegCommand { get; private set; }
 
+        private void AddValidations()
+        {
+            _validatableDescription.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Beschreibung eingeben"
+            });
+            _validatableType.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Art auswählen"
+            });
+        }
         private Beleg GetBusinessObject()
         {
             // Konvertierung passieren hier

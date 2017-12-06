@@ -17,14 +17,19 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout IsEnabled="{Binding Path=IsEditable}">
+        <!--IsEnabled="{Binding Path=IsEditable}"-->
+        <StackLayout >
             <Label Text="Beschreibung" />
-            <Entry Placeholder="Beschreibung" Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
+            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
+            <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
+            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" />
             <Label Text="Art" />
             <Picker SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" />
             <Label Text="Betrag" />
             <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" />
-            <DatePicker/>
+            <Label Text="Datum" />
+            <DatePicker Date="{Binding Datum, Mode=TwoWay}" />
         </StackLayout>
         <!--<Grid>
             <Grid.ColumnDefinitions>
