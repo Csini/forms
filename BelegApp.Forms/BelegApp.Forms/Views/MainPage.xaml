@@ -23,7 +23,7 @@
         <ToolbarItem Name="Aktualisieren" Clicked="Handle_Refreshing" Icon="refresh.png"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ListView 
+    <ListView
         x:Name="belegeListView"
         SeparatorVisibility="None"
         HasUnevenRows="true"
