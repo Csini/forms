@@ -18,29 +18,34 @@ namespace BelegApp.Forms.Utils
 
         static Storage storage;
 
-        public Storage Database
+        public static Storage Database
         {
             get
             {
                 if (storage == null)
                 {
-                    storage = new Storage(DependencyService.Get<IFileHelper>().GetLocalFilePath("BelegSQLite.db3"));
+                    storage = new Storage();
                 }
                 return storage;
             }
         }
 
-        SQLiteAsyncConnection database;
+        private readonly SQLiteAsyncConnection database;
 
-        public Storage(string dbPath)
+        public Storage() : this(new DependencyServiceWrapper())
         {
+        }
+
+        public Storage(IDependencyService dependencyService)
+        {
+            string dbPath = dependencyService.Get<IFileHelper>().GetLocalFilePath("BelegSQLite.db3");
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<Beleg>().Wait();
         }
 
-        public Task<List<Beleg>> GetBelege()
+        public Task<Beleg[]> GetBelege()
         {
-            return database.Table<Beleg>().ToListAsync();
+            return database.Table<Beleg>().ToListAsync().ContinueWith((lt) => lt.Result.ToArray());
         }
 
         public Task<int> StoreBeleg(Beleg beleg)
@@ -60,6 +65,11 @@ namespace BelegApp.Forms.Utils
         public Boolean isNew(Beleg beleg)
         {
             return beleg.Belegnummer == null || beleg.Belegnummer.Value < 0;
+        }
+
+        public Task<Beleg> GetBeleg(int belegnummer)
+        {
+            return database.Table<Beleg>().Where(beleg => beleg.Belegnummer == belegnummer).FirstAsync();
         }
     }
 }

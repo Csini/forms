@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BelegApp.Forms.Views.DetailPage"
+             xmlns:l="clr-namespace:BelegApp.Forms.Views.Converter"
+             xmlns:staticvalues="clr-namespace:BelegApp.Forms.Utils">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <l:DecimalConverter x:Key="decimalConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Title>
+        .
+    </ContentPage.Title>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Save" Text="S" Priority="0" Command="{Binding SaveBelegCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout IsEnabled="{Binding Path=IsEditable}">
+            <Label Text="Beschreibung" />
+            <Entry Placeholder="Beschreibung" Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
+            <Label Text="Art" />
+            <Picker SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+            <Label Text="Betrag" />
+            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" />
+            <DatePicker/>
+        </StackLayout>
+        <!--<Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> -->
+        <!--Bezeichnung-->
+        <!--
+                <RowDefinition Height="Auto" /> -->
+        <!--Art des Belegs-->
+        <!--
+                <RowDefinition Height="Auto" /> -->
+        <!--Betrag-->
+        <!--
+                <RowDefinition Height="Auto" /> -->
+        <!--Datum des Belegs-->
+        <!--
+            </Grid.RowDefinitions>-->
+
+        <!--<Entry Placeholder="Beschreibung" Grid.Column="0" Keyboard="Default" Text="{Binding Description}" />
+            <Picker Grid.Column="1" SelectedItem="{Binding Type}" />
+            <Entry Placeholder="10" Keyboard="Numeric" Grid.Column="2" Text="{Binding Betrag}" />
+            <DatePicker Grid.Column="3" />-->
+
+
+        <!--</Grid>-->
+        <!--<StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>-->
+    </ContentPage.Content>
+</ContentPage>

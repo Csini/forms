@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using BelegApp.Forms.Models;
+using BelegApp.Forms.ViewModels;
+using BelegApp.Forms.Utils;
 
 namespace BelegApp.Forms.Views
 {
@@ -32,13 +35,27 @@ namespace BelegApp.Forms.Views
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            //Hacky stuff ;)
             if (e.Item == null)
                 return;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            var beleg = e.Item as BelegDetailsViewModel;
 
+            try
+            {
+                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer, Navigation));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Fehler", ex.Message, "Continue");
+            }
             //Deselect Item
-            ((ListView)sender).SelectedItem = null;
+            ((ListView) sender).SelectedItem = null;
         }
+
+        //private void MenuItem_Clicked(object sender, EventArgs e)
+        //{
+
+        //}
     }
 }

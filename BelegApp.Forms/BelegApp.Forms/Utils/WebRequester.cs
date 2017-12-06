@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -485,10 +486,19 @@ namespace BelegApp.Forms.Utils
 			// Serviceaufruf durchführen
 			T result;
             HttpClient httpClient = new HttpClient();
-            string response = httpClient.GetStringAsync(requestUrl).Result;
-
-			// Response lesen und auswerten
-			result = JsonFormatter.FromJson<T>(response);
+            if (typeof(T) == typeof(byte[]))
+            {
+                // Antwortdaten als Byte-Array zurückgeben
+                // TODO: Anschauen, warum dynamic vielleicht funktioniert!
+                dynamic response = httpClient.GetByteArrayAsync(requestUrl).Result;
+                result = response;
+            }
+            else
+            {
+                // Antwortdaten als Objekt zurückgeben
+                string response = httpClient.GetStringAsync(requestUrl).Result;
+                result = JsonFormatter.FromJson<T>(response);
+            }
 
 			return result;
         } // private async static Task<T> httpGet<T>( ...
@@ -512,17 +522,25 @@ namespace BelegApp.Forms.Utils
 			// Action und QueryItems zur URL hinzufügen
 			Uri requestUrl = buildUrl(baseUrl, action, queryItems);
 
-			// Payload-Objekt als String formatieren
-			string payloadString = JsonFormatter.ToJson<TRequest>(payload);
-			Byte[] payloadBytes = Encoding.UTF8.GetBytes(payloadString);
-
             // Request ausführen
             HttpClient httpClient = new HttpClient();
-            HttpContent httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
+            HttpContent httpContent;
+            if (payload is byte[])
+            {
+                // zu übertragende Daten sind ein byte[]
+                httpContent = new ByteArrayContent(payload as byte[]);
+                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            }
+            else
+            {
+                // zu übertragende Daten als JSON formatieren
+                string payloadString = JsonFormatter.ToJson<TRequest>(payload);
+                httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
+            }
             HttpResponseMessage response = httpClient.PostAsync(requestUrl, httpContent).Result;
 
-			// Response lesen und auswerten
-			TResponse result;
+            // Response lesen und auswerten
+            TResponse result;
             if (response.IsSuccessStatusCode)
             {
                 result = JsonFormatter.FromJson<TResponse>(await response.Content.ReadAsStringAsync());
@@ -554,13 +572,21 @@ namespace BelegApp.Forms.Utils
             // Action und QueryItems zur URL hinzufügen
             Uri requestUrl = buildUrl(baseUrl, action, queryItems);
 
-            // Payload-Objekt als String formatieren
-            string payloadString = JsonFormatter.ToJson<TRequest>(payload);
-            Byte[] payloadBytes = Encoding.UTF8.GetBytes(payloadString);
-
             // Request ausführen
             HttpClient httpClient = new HttpClient();
-            HttpContent httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
+            HttpContent httpContent;
+            if (payload is byte[])
+            {
+                // zu übertragende Daten sind ein byte[]
+                httpContent = new ByteArrayContent(payload as byte[]);
+                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            }
+            else
+            {
+                // zu übertragende Daten als JSON formatieren
+                string payloadString = JsonFormatter.ToJson<TRequest>(payload);
+                httpContent = new StringContent(payloadString, Encoding.UTF8, "application/json");
+            }
             HttpResponseMessage response = httpClient.PutAsync(requestUrl, httpContent).Result;
 
             // Response lesen und auswerten
@@ -571,7 +597,7 @@ namespace BelegApp.Forms.Utils
             }
             else
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(response.ReasonPhrase);
             }
 
             return result;
