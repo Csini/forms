@@ -23,17 +23,48 @@ namespace BelegApp.Forms.Services
             this.database = database;
         }
 
-        public Task<int> ExportBelege(Beleg[] belege)
+        public async Task ExportBelege(Beleg[] belege)
         {
-            throw new NotImplementedException();
+            if (belege != null)
+            {
+                var tasks = new List<Task>();
+                foreach (Beleg beleg in belege)
+                {
+                    tasks.Add(ExportBeleg(beleg));
+                }
+                await Task.WhenAll(tasks);
+            }
         }
 
-        public Task<int> RefreshStatus()
+        internal async Task ExportBeleg(Beleg beleg)
         {
-            return Task.WhenAll(BelegService.GetBelegList(BelegService.USER), Storage.Database.GetBelege()).ContinueWith((r) => DoRefreshStatus(r.Result[0], r.Result[1]));
+            beleg.Belegnummer = await BelegService.CreateBeleg(BelegService.USER, beleg);
+
+            if (!beleg.Belegnummer.HasValue)
+            {
+                throw new Exception("Vermisse Beleg-ID!");
+            }
+
+            await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
+
+            beleg.Status = Beleg.StatusEnum.EXPORTIERT;
+            await database.StoreBeleg(beleg);
         }
 
-        internal int DoRefreshStatus(Beleg[] backend, Beleg[] local)
+        public async Task<int> RefreshStatus()
+        {
+            Task<Beleg[]> backend = BelegService.GetBelegList(BelegService.USER);
+            Task<Beleg[]> local = Storage.Database.GetBelege();
+
+            await backend;
+            await local;
+
+            Task<int> ret = DoRefreshStatus(backend.Result, local.Result);
+            await ret;
+            return ret.Result;
+        }
+
+        internal async Task<int> DoRefreshStatus(Beleg[] backend, Beleg[] local)
         {
             IDictionary<int, Beleg> locals = new Dictionary<int, Beleg>();
             foreach (Beleg beleg in local)
@@ -51,7 +82,8 @@ namespace BelegApp.Forms.Services
                     updates.Add(database.StoreBeleg(loc));
                 }
             }
-            return Task.WhenAll(updates.ToArray()).ContinueWith((r) => r.Result.Length).Result;
+            await Task.WhenAll(updates.ToArray());
+            return updates.Count;
         }
     }
 }

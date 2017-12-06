@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using BelegApp.Forms.Models;
 using static BelegApp.Forms.Models.Beleg;
 using BelegApp.Forms.Utils;
@@ -283,5 +284,8 @@ namespace BelegApp.Forms.ViewModels
             long betragInCent = long.Parse((dec * 100).ToString());
             return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
+
+        public ICommand SaveBelegCommand { get; private set; }
+
     }
 }
