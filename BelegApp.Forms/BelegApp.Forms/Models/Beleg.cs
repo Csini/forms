@@ -80,6 +80,7 @@ namespace BelegApp.Forms.Models
         /// Initializes a new instance of the <see cref="Beleg" /> class.
         /// </summary>
         /// <param name="Belegnummer">Id des Beleges.</param>
+        /// <param name="Label">Bezeichnung des Beleges (required).</param>
         /// <param name="Description">Beschreibung des Beleges (required).</param>
         /// <param name="Date">Belegdatum (required).</param>
         /// <param name="Type">Art des Beleges (required).</param>
@@ -87,18 +88,11 @@ namespace BelegApp.Forms.Models
         /// <param name="Status">Status des Beleges (required).</param>
         /// <param name="Thumbnail">Thumbnail-Darstellung des Beleges.</param>
         /// <param name="BelegSize">Groesse des Beleges.</param>
-        public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
+        public Beleg(int? Belegnummer = default(int?), string Label = default(string), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
         {
             this.Belegnummer = Belegnummer;
-             // to ensure "Description" is required (not null)
-            if (Description == null)
-            {
-                throw new InvalidDataException("Description is a required property for Beleg and cannot be null");
-            }
-            else
-            {
-                this.Description = Description;
-            }
+            this.Label = Label;
+            this.Description = Description;
             // to ensure "Date" is required (not null)
             if (Date == null)
             {
@@ -145,6 +139,13 @@ namespace BelegApp.Forms.Models
         /// <value>Id des Beleges</value>
         [PrimaryKey, DataMember(Name="belegnummer", EmitDefaultValue=false)]
         public int? Belegnummer { get; set; }
+
+        /// <summary>
+        /// Bezeichnung des Beleges
+        /// </summary>
+        /// <value>Bezeichnung des Beleges</value>
+        [DataMember(Name = "label", EmitDefaultValue = false)]
+        public string Label { get; set; }
 
         /// <summary>
         /// Beschreibung des Beleges

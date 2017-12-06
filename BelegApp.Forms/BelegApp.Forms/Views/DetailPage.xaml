@@ -22,6 +22,8 @@
     <ContentPage.Content>
         <!--IsEnabled="{Binding Path=IsEditable}"-->
         <StackLayout  Margin="30,50,30,50">
+            <Entry Keyboard="Default" Text="{Binding Label, Mode=TwoWay}" Placeholder="Label"/>
+            <Label Text="{Binding ValidatableLabel.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
             <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" Placeholder="Description"/>
             <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
             <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" FontSize="Micro"/>

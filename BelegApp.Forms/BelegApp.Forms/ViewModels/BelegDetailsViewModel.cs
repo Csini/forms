@@ -16,6 +16,7 @@ namespace BelegApp.Forms.ViewModels
     {
         private int? _belegNummer;
         private StatusEnum? _statusEnum;
+        private ValidatableObject<string> _validatableLabel;
         private ValidatableObject<string> _validatableDescription;
         private DateTime? _datum;
         private ValidatableObject<string> _validatableType;
@@ -28,6 +29,7 @@ namespace BelegApp.Forms.ViewModels
         {
             Status = StatusEnum.ERFASST;
             Datum = DateTime.Now;
+            _validatableLabel = new ValidatableObject<string>(true);
             _validatableDescription = new ValidatableObject<string>(true);
             _validatableType = new ValidatableObject<string>(true);
             Init();
@@ -40,6 +42,8 @@ namespace BelegApp.Forms.ViewModels
 
             Belegnummer = beleg.Belegnummer;
             _statusEnum = beleg.Status;
+            _validatableLabel = new ValidatableObject<string>(true);
+            Label = beleg.Label;
             _validatableDescription = new ValidatableObject<string>(true);
             Description = beleg.Description;
             _datum = beleg.Date;
@@ -59,7 +63,7 @@ namespace BelegApp.Forms.ViewModels
                 // Update IsEditable
                 if (e.PropertyName == nameof(Status))
                     OnPropertyChanged(nameof(IsEditable));
-                if (e.PropertyName == nameof(Description) || e.PropertyName == nameof(Type))
+                if (e.PropertyName == nameof(Label) || e.PropertyName == nameof(Description) || e.PropertyName == nameof(Type))
                     ((Command)SaveBelegCommand).ChangeCanExecute();
                 //OnPropertyChanged(nameof(CanSave));
             };
@@ -111,6 +115,34 @@ namespace BelegApp.Forms.ViewModels
             get
             {
                 return _iconName;
+            }
+        }
+
+        public string Label
+        {
+            get
+            {
+                return ValidatableLabel.Value;
+            }
+            set
+            {
+                if (Equals(ValidatableLabel.Value, value)) return;
+                ValidatableLabel.Value = value;
+                OnPropertyChanged(nameof(Label));
+            }
+        }
+
+        public ValidatableObject<string> ValidatableLabel
+        {
+            get
+            {
+                return _validatableLabel;
+            }
+            set
+            {
+                //if (Equals(_label, value)) return;
+                _validatableLabel = value;
+                OnPropertyChanged(nameof(Label));
             }
         }
 
@@ -251,10 +283,11 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
+                ValidatableLabel.Validate();
                 ValidatableDescription.Validate();
                 ValidatableType.Validate();
                 return
-                    ValidatableDescription.IsValid && ValidatableType.IsValid;
+                    ValidatableLabel.IsValid && ValidatableDescription.IsValid && ValidatableType.IsValid;
             }
         }
 
@@ -272,6 +305,10 @@ namespace BelegApp.Forms.ViewModels
 
         private void AddValidations()
         {
+            _validatableLabel.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Bezeichnung eingeben"
+            });
             _validatableDescription.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
                 ValidationMessage = "Beschreibung eingeben"
@@ -287,8 +324,9 @@ namespace BelegApp.Forms.ViewModels
             // zB Konvertierung des Betrags in Cent
 #warning it's too late - hacky
             var dec = decimal.Parse(Betrag.Value.ToString("0.##"));
-            long betragInCent = long.Parse((dec * 100).ToString());
-            return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
+            string cents = (dec * 100).ToString("0");
+            long betragInCent = long.Parse(cents);
+            return new Beleg(Belegnummer, Label, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
 
     }
