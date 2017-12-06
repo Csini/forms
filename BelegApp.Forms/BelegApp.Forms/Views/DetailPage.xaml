@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BelegApp.Forms.Views.DetailPage"
@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Title>
-        
+
     </ContentPage.Title>
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Speichern" Command="{Binding SaveBelegCommand}" Icon="save.png"></ToolbarItem>
@@ -21,38 +21,44 @@
 
     <ContentPage.Content>
         <!--IsEnabled="{Binding Path=IsEditable}"-->
-        <StackLayout  Margin="30,50,30,50">
-            <!-- Bezeichnung -->
-            <Entry Keyboard="Default" Text="{Binding Label, Mode=TwoWay}" Placeholder="Label"/>
-            <Label Text="{Binding ValidatableLabel.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
-            
-            <!-- Beschreibung -->
-            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" Placeholder="Description"/>
-            <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
-            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
-            
-            <!-- Belegtyp -->
-            <Picker Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
-            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
+        <ScrollView>
+            <StackLayout  Margin="30,50,30,50">
+                <!-- Bezeichnung -->
+                <Entry Keyboard="Default" Text="{Binding Label, Mode=TwoWay}" Placeholder="Label"/>
+                <Label Text="{Binding ValidatableLabel.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
 
-            <!-- Betrag -->
-            <Grid RowSpacing="0" ColumnSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <Entry Grid.Column="0" Grid.Row="0" Keyboard="Numeric" FontSize="Default" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
-                <Label Grid.Column="1" Grid.Row="0" Text="EUR" FontSize="Small" Font="Bold" WidthRequest="50" TextColor="Black" VerticalTextAlignment="Center"/>
-            </Grid>
+                <!-- Beschreibung -->
+                <Editor Keyboard="Default" Text="{Binding Description, Mode=TwoWay}"/>
+                <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
 
-            <!-- Datum -->
-            <DatePicker Date="{Binding Datum, Mode=TwoWay}"/>
-            
-            <!-- Bild -->
-            <Image Source="{Binding ImageImageSource}" />
-        </StackLayout>
+                <!-- Belegtyp -->
+                <Picker Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+                <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
+
+                <!-- Betrag -->
+                <Grid RowSpacing="0" ColumnSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry Grid.Column="0" Grid.Row="0" Keyboard="Numeric" FontSize="Default" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
+                    <Label Grid.Column="1" Grid.Row="0" Text="EUR" FontSize="Small" Font="Bold" WidthRequest="50" TextColor="Black" VerticalTextAlignment="Center"/>
+                </Grid>
+
+                <!-- Datum -->
+                <DatePicker Date="{Binding Datum, Mode=TwoWay}"/>
+
+                <StackLayout Orientation="Vertical" >
+                    <Button Text="[o]" Command="{Binding StartCameraCommand}" />
+                    <Button Text="?!" Command="{Binding SelectPictureCommand}" />
+                </StackLayout>
+
+                <!-- Bild -->
+                <Image Source="{Binding ImageImageSource}" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

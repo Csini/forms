@@ -79,12 +79,12 @@ namespace BelegApp.Forms.ViewModels
                 //OnPropertyChanged(nameof(CanSave));
             };
 
-            SaveBelegCommand = new Command(() =>
+            SaveBelegCommand = new Command(async () =>
             {
                 Beleg beleg = this.GetBusinessObject();
                 if (beleg.Thumbnail == null && beleg.Image != null)
                 {
-                    beleg.Thumbnail = BelegService.CreateThumbnail(beleg.Image).Result;
+                    beleg.Thumbnail = await BelegService.CreateThumbnail(beleg.Image);
                 }
                 var result = Storage.Database.StoreBeleg(beleg).Result;
                 if (result > 0)
@@ -94,13 +94,13 @@ namespace BelegApp.Forms.ViewModels
             StartCameraCommand = new Command(async () =>
             {
                 var img = await ImageServices.CaptureImage();
-                Thumbnail = ConvertStreamToByteArray(img);
+                Image = ConvertStreamToByteArray(img);
             });
 
             SelectPictureCommand = new Command(async () =>
             {
                 var img = await ImageServices.SelectImage();
-                Thumbnail = ConvertStreamToByteArray(img);
+                Image = ConvertStreamToByteArray(img);
             });
 
             AddValidations();
@@ -417,7 +417,7 @@ namespace BelegApp.Forms.ViewModels
             var dec = decimal.Parse(Betrag.Value.ToString("0.##"));
             string cents = (dec * 100).ToString("0");
             long betragInCent = long.Parse(cents);
-            return new Beleg(Belegnummer, Label, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
+            return new Beleg(Belegnummer, Label, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize, Image);
         }
 
     }
