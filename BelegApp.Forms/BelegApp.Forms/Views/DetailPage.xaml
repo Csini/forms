@@ -20,48 +20,57 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <!--IsEnabled="{Binding Path=IsEditable}"-->
-        <StackLayout  Margin="30,50,30,50">
-            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" Placeholder="Description"/>
-            <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
-            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
-            <Picker  Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
-            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed"  FontSize="Micro"/>
-            <Label Text="Betrag" FontSize="Micro"/>
-            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
-            <Label Text="Datum" />
-            <DatePicker Date="{Binding Datum, Mode=TwoWay}" />
-        </StackLayout>
-        <!--<Grid>
+        <ScrollView>
+            <!--IsEnabled="{Binding Path=IsEditable}"-->
+            <StackLayout  Margin="30,50,30,50">
+                <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" Placeholder="Description"/>
+                <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
+                <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
+                <Picker  Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+                <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed"  FontSize="Micro"/>
+                <Label Text="Betrag" FontSize="Micro"/>
+                <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
+                <Label Text="Datum" />
+                <DatePicker Date="{Binding Datum, Mode=TwoWay}" />
+                <Label Text="Belegfoto" />
+                <StackLayout Orientation="Vertical" >
+                    <Button Text="from camera" Command="{Binding StartCameraCommand}" />
+                    <!--<Button Text="from gallery" Command="{Binding SelectPictureCommand}" />-->
+                    <!--<Button Text="from camera" Clicked="StartCamera" />-->
+                    <Button Text="from gallery" Clicked="SelectPicture"/>
+                </StackLayout>
+            </StackLayout>
+            <!--<Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" /> -->
-        <!--Bezeichnung-->
-        <!--
+            <!--Bezeichnung-->
+            <!--
                 <RowDefinition Height="Auto" /> -->
-        <!--Art des Belegs-->
-        <!--
+            <!--Art des Belegs-->
+            <!--
                 <RowDefinition Height="Auto" /> -->
-        <!--Betrag-->
-        <!--
+            <!--Betrag-->
+            <!--
                 <RowDefinition Height="Auto" /> -->
-        <!--Datum des Belegs-->
-        <!--
+            <!--Datum des Belegs-->
+            <!--
             </Grid.RowDefinitions>-->
 
-        <!--<Entry Placeholder="Beschreibung" Grid.Column="0" Keyboard="Default" Text="{Binding Description}" />
+            <!--<Entry Placeholder="Beschreibung" Grid.Column="0" Keyboard="Default" Text="{Binding Description}" />
             <Picker Grid.Column="1" SelectedItem="{Binding Type}" />
             <Entry Placeholder="10" Keyboard="Numeric" Grid.Column="2" Text="{Binding Betrag}" />
             <DatePicker Grid.Column="3" />-->
 
 
-        <!--</Grid>-->
-        <!--<StackLayout>
+            <!--</Grid>-->
+            <!--<StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>-->
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
