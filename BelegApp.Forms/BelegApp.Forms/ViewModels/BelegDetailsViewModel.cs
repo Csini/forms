@@ -8,6 +8,7 @@ using BelegApp.Forms.Utils;
 using System.Windows.Input;
 using Xamarin.Forms;
 using BelegApp.Forms.ValidationRule;
+using BelegApp.Forms.Services;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -68,7 +69,12 @@ namespace BelegApp.Forms.ViewModels
 
             SaveBelegCommand = new Command(() =>
             {
-                var result = Storage.Database.StoreBeleg(this.GetBusinessObject()).Result;
+                Beleg beleg = this.GetBusinessObject();
+                if (beleg.Thumbnail == null && beleg.Image != null)
+                {
+                    beleg.Thumbnail = BelegService.CreateThumbnail(beleg.Image).Result;
+                }
+                var result = Storage.Database.StoreBeleg(beleg).Result;
                 if (result > 0)
                     Callback();
             }, () => CanSave);
