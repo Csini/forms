@@ -16,10 +16,10 @@ namespace BelegApp.Forms.Views.Converter
                 bool b = (bool)value;
                 if (b)
                 {
-                    return "Black";
+                    return "Accent";
                 }
             }
-            return "";
+            return "Transparent";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
