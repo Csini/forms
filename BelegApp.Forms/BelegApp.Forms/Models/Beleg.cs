@@ -79,7 +79,7 @@ namespace BelegApp.Forms.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Beleg" /> class.
         /// </summary>
-        /// <param name="Belegnummer">Id des Beleges (required).</param>
+        /// <param name="Belegnummer">Id des Beleges.</param>
         /// <param name="Description">Beschreibung des Beleges (required).</param>
         /// <param name="Date">Belegdatum (required).</param>
         /// <param name="Type">Art des Beleges (required).</param>
@@ -89,16 +89,8 @@ namespace BelegApp.Forms.Models
         /// <param name="BelegSize">Groesse des Beleges.</param>
         public Beleg(int? Belegnummer = default(int?), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
         {
-            // to ensure "Belegnummer" is required (not null)
-            if (Belegnummer == null)
-            {
-                throw new InvalidDataException("Belegnummer is a required property for Beleg and cannot be null");
-            }
-            else
-            {
-                this.Belegnummer = Belegnummer;
-            }
-            // to ensure "Description" is required (not null)
+            this.Belegnummer = Belegnummer;
+             // to ensure "Description" is required (not null)
             if (Description == null)
             {
                 throw new InvalidDataException("Description is a required property for Beleg and cannot be null");

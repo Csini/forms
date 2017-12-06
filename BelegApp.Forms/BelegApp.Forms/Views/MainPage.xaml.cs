@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BelegApp.Forms.Models;
 using BelegApp.Forms.ViewModels;
+using BelegApp.Forms.Utils;
 
 namespace BelegApp.Forms.Views
 {
@@ -37,11 +38,12 @@ namespace BelegApp.Forms.Views
             //Hacky stuff ;)
             if (e.Item == null)
                 return;
+
             var beleg = e.Item as BelegDetailsViewModel;
 
             try
             {
-                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer));
+                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer, Navigation));
             }
             catch (Exception ex)
             {

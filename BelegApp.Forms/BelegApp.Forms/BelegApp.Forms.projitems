@@ -12,12 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods\MediaFileExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IDependencyService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ImageServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\StaticValues.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Storage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JsonFormatter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\Beleg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\BelegService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SwaggerDateConverter.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegDetailsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegMasterViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Converter\DecimalConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -35,10 +37,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -55,6 +53,5 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-   
   </ItemGroup>
 </Project>
