@@ -9,28 +9,19 @@ using Xamarin.Forms.Xaml;
 using BelegApp.Forms.Models;
 using BelegApp.Forms.ViewModels;
 using BelegApp.Forms.Utils;
+using BelegApp.Forms.Services;
 
 namespace BelegApp.Forms.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        public ObservableCollection<string> Items { get; set; }
-
         public MainPage()
         {
             InitializeComponent();
 
-            Items = new ObservableCollection<string>
-            {
-                "Item 1",
-                "Item 2",
-                "Item 3",
-                "Item 4",
-                "Item 5"
-            };
-			
-			//MyListView.ItemsSource = Items;
+            // ViewModel initialisieren
+            getBelegList().Wait();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -53,9 +44,32 @@ namespace BelegApp.Forms.Views
             ((ListView) sender).SelectedItem = null;
         }
 
-        //private void MenuItem_Clicked(object sender, EventArgs e)
-        //{
+        async void Handle_Refreshing(Object sender, EventArgs e)
+        {
+            if (belegeListView != null)
+            {
+                // Refreshmodus aktivieren
+                //belegeListView.BeginRefresh();
 
-        //}
+                try
+                {
+                    // ViewModel initialisieren
+                    getBelegList().Wait();
+                }
+                finally
+                {
+                    // Refreshmodus beenden
+                    //belegeListView.EndRefresh();
+                }
+            }
+        }
+
+        private async Task getBelegList()
+        {
+            // Belegliste online holen
+            Beleg[] belegList = await BelegService.GetBelegList(BelegService.USER);
+            BelegMasterViewModel viewModel = new BelegMasterViewModel(this.Navigation, belegList);
+            this.BindingContext = viewModel;
+        }
     }
 }

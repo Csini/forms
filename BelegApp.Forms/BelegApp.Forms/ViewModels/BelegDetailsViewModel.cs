@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using BelegApp.Forms.Models;
 using static BelegApp.Forms.Models.Beleg;
 
@@ -154,5 +155,8 @@ namespace BelegApp.Forms.ViewModels
                 OnPropertyChanged(nameof(Betrag));
             }
         }
+
+        public ICommand SaveBelegCommand { get; private set; }
+
     }
 }

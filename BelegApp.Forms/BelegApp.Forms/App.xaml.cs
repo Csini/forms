@@ -17,9 +17,7 @@ namespace BelegApp.Forms
 		{
 			InitializeComponent();
             
-            //MainPage = new BelegApp.Forms.MainPage();
-            MainPage = new NavigationPage( new BelegApp.Forms.Views.MainPage());
-            getBelegList();
+            MainPage = new NavigationPage(new BelegApp.Forms.Views.MainPage());
 		}
 
 		protected override void OnStart ()
@@ -36,26 +34,5 @@ namespace BelegApp.Forms
 		{
 			// Handle when your app resumes
 		}
-
-        public BelegMasterViewModel BelegMasterViewModel
-        {
-            get
-            {
-                return _belegMasterViewModel;
-            }
-            private set
-            {
-                if (Equals(_belegMasterViewModel, value)) return;
-                _belegMasterViewModel = value;
-            }
-        }
-
-        private async Task getBelegList()
-        {
-            // Belegliste online holen
-            Beleg[] belegList = await BelegService.GetBelegList(BelegService.USER);
-            BelegMasterViewModel = new BelegMasterViewModel(MainPage.Navigation, belegList);
-            MainPage.BindingContext = BelegMasterViewModel;
-        }
 	}
 }
