@@ -62,6 +62,8 @@ namespace BelegApp.Forms.ViewModels
             _iconName = beleg.Status + ".png";
             _image = beleg.Image;
 
+            _betrag = beleg.Betrag / 100;
+
             selected = false;
 
             Init();
