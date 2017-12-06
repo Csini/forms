@@ -15,21 +15,27 @@ namespace BelegApp.Forms.ViewModels
     public class BelegMasterViewModel : BaseViewModel
     {
         private ObservableCollection<BelegDetailsViewModel> _belege;
-        public BelegMasterViewModel(INavigation navigation)
+        public BelegMasterViewModel(INavigation navigation) : this(navigation, null)
+        {
+        }
+
+        public BelegMasterViewModel(INavigation navigation, Beleg[] belegList)
         {
             AddNewBelegCommand = new Command(() =>
             {
-                navigation.PushAsync(new DetailPage(null));
+                navigation.PushAsync(new DetailPage(null, navigation));
             });
 
+            
             Belege = new ObservableCollection<BelegDetailsViewModel>(); // Ladeoperation von Service
-            Belege.Add(new BelegDetailsViewModel(new Beleg(1, "asdf", DateTime.Now, "Geiler Typ", 123, StatusEnum.GEBUCHT, null, 12)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
-            Belege.Add(new BelegDetailsViewModel(new Beleg(2, "jklö", DateTime.Now, "Typ", 999, StatusEnum.EXPORTIERT, null, 121)));
+
+            if (belegList != null)
+            {
+                foreach (Beleg beleg in belegList)
+                {
+                    Belege.Add(new BelegDetailsViewModel(beleg));
+                }
+            }
         }
 
         public ObservableCollection<BelegDetailsViewModel> Belege

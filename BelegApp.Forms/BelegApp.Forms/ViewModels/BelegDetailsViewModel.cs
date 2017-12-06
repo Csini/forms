@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using BelegApp.Forms.Models;
 using static BelegApp.Forms.Models.Beleg;
+using BelegApp.Forms.Utils;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -15,10 +18,23 @@ namespace BelegApp.Forms.ViewModels
         private string _type;
         private byte[] _thumbnail;
         private long? _belegSize;
-        private long? _betrag;
         private string _iconName;
+        private decimal? _betrag;
 
-        public BelegDetailsViewModel() { }
+        public BelegDetailsViewModel()
+        {
+            InitCommands();
+        }
+
+        private void InitCommands()
+        {
+            SaveBelegCommand = new Command(() =>
+            {
+                var result = Storage.Database.StoreBeleg(this.GetBusinessObject()).Result;
+                if (result < 0)
+                    Callback();
+            });
+        }
 
         public BelegDetailsViewModel(Beleg beleg)
         {
@@ -30,10 +46,19 @@ namespace BelegApp.Forms.ViewModels
             _description = beleg.Description;
             _datum = beleg.Date;
             _type = beleg.Type;
-            /*_thumbnail = */
+            _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
 
+            InitCommands();
+
+            PropertyChanged += (s, e) =>
+            {
+                // Update IsEditable
+                if (e.PropertyName == nameof(Status))
+                    OnPropertyChanged(nameof(IsEditable));
+
+            };
         }
 
         public int? Belegnummer
@@ -100,6 +125,19 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
+        public string DatumString
+        {
+            get
+            {
+                string result = null;
+                if (_datum.HasValue)
+                {
+                    result = _datum.Value.ToString("dd.MM.yyyy");
+                }
+                return result;
+            }
+        }
+
         public string Type
         {
             get
@@ -128,7 +166,7 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
-        public long? Betrag
+        public decimal? Betrag
         {
             get
             {
@@ -137,9 +175,54 @@ namespace BelegApp.Forms.ViewModels
             set
             {
                 if (Equals(_betrag, value)) return;
+                // It's getting hacky ;)
                 _betrag = value;
                 OnPropertyChanged(nameof(Betrag));
             }
+        }
+
+        public byte[] Thumbnail
+        {
+            get
+            {
+                return _thumbnail;
+            }
+            set
+            {
+                if (Equals(_thumbnail, value)) return;
+                _thumbnail = value;
+                OnPropertyChanged(nameof(Thumbnail));
+            }
+        }
+
+        public bool IsEditable
+        {
+            get
+            {
+                return (Status != StatusEnum.ERFASST);
+            }
+        }
+
+        public List<string> Types
+        {
+            get
+            {
+                return StaticValues.BelagTypes;
+            }
+        }
+
+        public Action Callback { get; set; }
+
+        public ICommand SaveBelegCommand { get; private set; }
+
+        private Beleg GetBusinessObject()
+        {
+            // Konvertierung passieren hier
+            // zB Konvertierung des Betrags in Cent
+#warning it's too late - hacky
+            var dec = decimal.Parse(Betrag.Value.ToString("0.##"));
+            long betragInCent = long.Parse((dec * 100).ToString());
+            return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
     }
 }

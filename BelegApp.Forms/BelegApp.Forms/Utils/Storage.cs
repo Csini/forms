@@ -30,8 +30,6 @@ namespace BelegApp.Forms.Utils
             }
         }
 
-        private readonly IDependencyService _dependencyService;
-
         private readonly SQLiteAsyncConnection database;
 
         public Storage() : this(new DependencyServiceWrapper())
