@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegDetailsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BelegMasterViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Converter\BackgroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter\DecimalConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>

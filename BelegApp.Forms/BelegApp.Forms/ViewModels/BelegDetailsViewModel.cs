@@ -23,6 +23,8 @@ namespace BelegApp.Forms.ViewModels
         private string _iconName;
         private decimal? _betrag;
 
+        private bool selected;
+
         public BelegDetailsViewModel()
         {
             Status = StatusEnum.ERFASST;
@@ -47,6 +49,8 @@ namespace BelegApp.Forms.ViewModels
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
+
+            selected = false;
 
             Init();
         }
@@ -230,6 +234,20 @@ namespace BelegApp.Forms.ViewModels
                 if (Equals(_thumbnail, value)) return;
                 _thumbnail = value;
                 OnPropertyChanged(nameof(Thumbnail));
+            }
+        }
+
+        public bool IsSelected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if (Equals(selected, value)) return;
+                selected = value;
+                OnPropertyChanged(nameof(IsSelected));
             }
         }
 

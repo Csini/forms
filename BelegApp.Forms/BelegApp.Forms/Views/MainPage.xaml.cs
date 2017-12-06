@@ -24,6 +24,8 @@ namespace BelegApp.Forms.Views
             getDatabaseBelegList().Wait();
         }
 
+        BelegMasterViewModel viewModel;
+
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             //Hacky stuff ;)
@@ -32,13 +34,22 @@ namespace BelegApp.Forms.Views
 
             var beleg = e.Item as BelegDetailsViewModel;
 
-            try
-            {
-                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer, Navigation));
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Fehler", ex.Message, "Continue");
+           if (viewModel.selectMode)
+           {
+                if (beleg.IsEditable)
+                {
+                    beleg.IsSelected = true;
+                }
+           } else
+           {
+                try
+                {
+                    await Navigation.PushAsync(new DetailPage(beleg.Belegnummer, Navigation));
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Fehler", ex.Message, "Continue");
+                }
             }
             //Deselect Item
             ((ListView) sender).SelectedItem = null;
@@ -68,7 +79,7 @@ namespace BelegApp.Forms.Views
         {
             // Belegliste aus der Datenbank holen
             Beleg[] belegList = new Storage().GetBelege().Result;
-            BelegMasterViewModel viewModel = new BelegMasterViewModel(this.Navigation, belegList);
+            viewModel = new BelegMasterViewModel(this.Navigation, belegList);
             this.BindingContext = viewModel;
         }
 

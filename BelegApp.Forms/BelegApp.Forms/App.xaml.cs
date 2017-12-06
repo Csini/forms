@@ -13,7 +13,6 @@ namespace BelegApp.Forms
 {
 	public partial class App : Application
 	{
-        private BelegMasterViewModel _belegMasterViewModel;
 		public App ()
 		{
 			InitializeComponent();
