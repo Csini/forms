@@ -20,12 +20,18 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout IsEnabled="{Binding Path=IsEditable}" Margin="30,50,30,50">
-            <Entry Placeholder="Beschreibung" Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
-            <Picker Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}"/>
+        <!--IsEnabled="{Binding Path=IsEditable}"-->
+        <StackLayout  Margin="30,50,30,50">
+            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
+            <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
+            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" />
+            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" />
+            <Picker  Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" />
             <Label Text="Betrag" FontSize="Micro"/>
             <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
-            <DatePicker/>
+            <Label Text="Datum" />
+            <DatePicker Date="{Binding Datum, Mode=TwoWay}" />
         </StackLayout>
         <!--<Grid>
             <Grid.ColumnDefinitions>

@@ -45,18 +45,20 @@ namespace BelegApp.Forms.Services
                 throw new Exception("Vermisse Beleg-ID!");
             }
 
-            await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
-
+            beleg.Thumbnail = await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
             beleg.Status = Beleg.StatusEnum.EXPORTIERT;
             await database.StoreBeleg(beleg);
         }
 
-        public Task<int> RefreshStatus()
+        public async Task<int> RefreshStatus()
         {
-            return Task.WhenAll(BelegService.GetBelegList(BelegService.USER), Storage.Database.GetBelege()).ContinueWith((r) => DoRefreshStatus(r.Result[0], r.Result[1]));
+            Task<Beleg[]> backend = BelegService.GetBelegList(BelegService.USER);
+            Task<Beleg[]> local = Storage.Database.GetBelege();
+
+            return await DoRefreshStatus(await backend, await local);
         }
 
-        internal int DoRefreshStatus(Beleg[] backend, Beleg[] local)
+        internal async Task<int> DoRefreshStatus(Beleg[] backend, Beleg[] local)
         {
             IDictionary<int, Beleg> locals = new Dictionary<int, Beleg>();
             foreach (Beleg beleg in local)
@@ -67,14 +69,22 @@ namespace BelegApp.Forms.Services
             foreach (Beleg beleg in backend)
             {
                 int nr = beleg.Belegnummer.Value;
-                if (locals.ContainsKey(nr))
+                if (beleg.Status < Beleg.StatusEnum.GEBUCHT || locals.ContainsKey(nr))
                 {
-                    Beleg loc = locals[nr];
-                    loc.Status = beleg.Status;
-                    updates.Add(database.StoreBeleg(loc));
+                    Beleg loc;
+                    if (locals.TryGetValue(nr, out loc) && beleg.BelegSize == loc.BelegSize)
+                    {
+                        beleg.Image = loc.Image;
+                    }
+                    else
+                    {
+                        beleg.Image = await BelegService.GetBelegImage(BelegService.USER, nr);
+                    }
+                    updates.Add(database.StoreBeleg(beleg));
                 }
             }
-            return Task.WhenAll(updates.ToArray()).ContinueWith((r) => r.Result.Length).Result;
+            await Task.WhenAll(updates.ToArray());
+            return updates.Count;
         }
     }
 }
