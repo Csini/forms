@@ -61,8 +61,9 @@ namespace BelegApp.Forms.ViewModels
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
             _image = beleg.Image;
-
-            _betrag = beleg.Betrag / 100;
+            _betrag = beleg.Betrag / 100m;
+            //decimal.Parse(beleg.Betrag / 100m)).ToString("c")); //e.g. 12345 becomes €123.45 for me)
+            //_betrag = (decimal)(beleg.Betrag / 100);
 
             selected = false;
 
