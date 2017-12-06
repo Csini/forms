@@ -29,6 +29,8 @@ namespace BelegApp.Forms.ViewModels
         private byte[] _image;
         private ImageSource _imageImageSource;
 
+        private bool selected;
+
         public BelegDetailsViewModel()
         {
             Status = StatusEnum.ERFASST;
@@ -59,6 +61,8 @@ namespace BelegApp.Forms.ViewModels
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
             _image = beleg.Image;
+
+            selected = false;
 
             Init();
         }
@@ -319,6 +323,20 @@ namespace BelegApp.Forms.ViewModels
                 return _imageImageSource;
             }
         }
+        public bool IsSelected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if (Equals(selected, value)) return;
+                selected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
+
         public bool IsEditable
         {
             get

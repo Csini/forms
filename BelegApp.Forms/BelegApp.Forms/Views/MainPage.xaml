@@ -5,11 +5,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:l="clr-namespace:BelegApp.Forms.Views.Converter"
              x:Class="BelegApp.Forms.Views.MainPage"
              BackgroundColor="DarkGray"
              BackgroundImage="old.jpg"
              >
-    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <l:BackgroundConverter x:Key="backgroundConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <ContentPage.Title>
         Belege
@@ -42,7 +47,7 @@
 
                     <Grid>
 
-                        <Grid>
+                        <Grid BackgroundColor="{Binding IsSelected, Converter={StaticResource backgroundConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
