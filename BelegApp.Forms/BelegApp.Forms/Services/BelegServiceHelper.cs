@@ -51,12 +51,20 @@ namespace BelegApp.Forms.Services
             await database.StoreBeleg(beleg);
         }
 
-        public Task<int> RefreshStatus()
+        public async Task<int> RefreshStatus()
         {
-            return Task.WhenAll(BelegService.GetBelegList(BelegService.USER), Storage.Database.GetBelege()).ContinueWith((r) => DoRefreshStatus(r.Result[0], r.Result[1]));
+            Task<Beleg[]> backend = BelegService.GetBelegList(BelegService.USER);
+            Task<Beleg[]> local = Storage.Database.GetBelege();
+
+            await backend;
+            await local;
+
+            Task<int> ret = DoRefreshStatus(backend.Result, local.Result);
+            await ret;
+            return ret.Result;
         }
 
-        internal int DoRefreshStatus(Beleg[] backend, Beleg[] local)
+        internal async Task<int> DoRefreshStatus(Beleg[] backend, Beleg[] local)
         {
             IDictionary<int, Beleg> locals = new Dictionary<int, Beleg>();
             foreach (Beleg beleg in local)
@@ -74,7 +82,8 @@ namespace BelegApp.Forms.Services
                     updates.Add(database.StoreBeleg(loc));
                 }
             }
-            return Task.WhenAll(updates.ToArray()).ContinueWith((r) => r.Result.Length).Result;
+            await Task.WhenAll(updates.ToArray());
+            return updates.Count;
         }
     }
 }
