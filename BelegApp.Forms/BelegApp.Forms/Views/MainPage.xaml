@@ -23,7 +23,7 @@
         <ToolbarItem Name="Aktualisieren" Clicked="Handle_Refreshing" Icon="refresh.png"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ListView 
+    <ListView
         x:Name="belegeListView"
         SeparatorVisibility="None"
         HasUnevenRows="true"
@@ -32,8 +32,6 @@
         ItemTapped="Handle_ItemTapped"
         Refreshing="Handle_Refreshing"
         Margin="0,50,0,50"
-         IsGroupingEnabled="true" 
-           GroupDisplayBinding="{Binding Type}"
         >
         <ListView.ItemTemplate>
             <DataTemplate>

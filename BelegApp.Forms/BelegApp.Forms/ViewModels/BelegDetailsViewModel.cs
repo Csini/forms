@@ -42,12 +42,15 @@ namespace BelegApp.Forms.ViewModels
             if (beleg == null)
                 throw new ArgumentNullException("beleg");
 
+            _validatableDescription = new ValidatableObject<string>(true);
+            _validatableType = new ValidatableObject<string>(true);
+
             Belegnummer = beleg.Belegnummer;
             _statusEnum = beleg.Status;
-            _validatableDescription = new ValidatableObject<string>(true);
+            
             Description = beleg.Description;
             _datum = beleg.Date;
-            _validatableType = new ValidatableObject<string>(true);
+            
             Type = beleg.Type;
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
@@ -289,7 +292,7 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
-                return (Status != StatusEnum.ERFASST);
+                return (Status == StatusEnum.ERFASST);
             }
         }
 
