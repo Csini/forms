@@ -543,7 +543,19 @@ namespace BelegApp.Forms.Utils
             TResponse result;
             if (response.IsSuccessStatusCode)
             {
-                result = JsonFormatter.FromJson<TResponse>(await response.Content.ReadAsStringAsync());
+                if (typeof(TResponse) == typeof(byte[]))
+                {
+                    // Antwortdaten als Byte-Array zurückgeben
+                    // TODO: Anschauen, warum dynamic vielleicht funktioniert!
+                    dynamic responseData = response.Content.ReadAsByteArrayAsync().Result;
+                    result = responseData;
+                }
+                else
+                {
+                    // Antwortdaten als Objekt zurückgeben
+                    string responseData = response.Content.ReadAsStringAsync().Result;
+                    result = JsonFormatter.FromJson<TResponse>(responseData);
+                }
             }
             else
             {
@@ -593,7 +605,19 @@ namespace BelegApp.Forms.Utils
             TResponse result;
             if (response.IsSuccessStatusCode)
             {
-                result = JsonFormatter.FromJson<TResponse>(await response.Content.ReadAsStringAsync());
+                if (typeof(TResponse) == typeof(byte[]))
+                {
+                    // Antwortdaten als Byte-Array zurückgeben
+                    // TODO: Anschauen, warum dynamic vielleicht funktioniert!
+                    dynamic responseData = response.Content.ReadAsByteArrayAsync().Result;
+                    result = responseData;
+                }
+                else
+                {
+                    // Antwortdaten als Objekt zurückgeben
+                    string responseData = response.Content.ReadAsStringAsync().Result;
+                    result = JsonFormatter.FromJson<TResponse>(responseData);
+                }
             }
             else
             {

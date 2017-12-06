@@ -104,11 +104,24 @@ namespace BelegApp.Forms.Services
                     {
                         beleg.Image = await BelegService.GetBelegImage(BelegService.USER, nr);
                     }
+                    if (loc != null)
+                    {
+                        locals.Remove(nr);
+                    }
                     updates.Add(beleg);
                 }
             }
+            List<Beleg> deletes = new List<Beleg>();
+            foreach (Beleg beleg in locals.Values)
+            {
+                if (beleg.Status > Beleg.StatusEnum.ERFASST)
+                {
+                    deletes.Add(beleg);
+                }
+            }
+            await database.RemoveBelege(deletes.ToArray());
             await database.StoreBelege(updates.ToArray());
-            return updates.Count;
+            return updates.Count + deletes.Count;
         }
     }
 }

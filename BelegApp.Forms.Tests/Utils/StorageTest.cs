@@ -65,7 +65,7 @@ namespace BelegApp.Forms.Tests.Utils
         [TestMethod]
         public void ConsecutiveStoreShouldChangeBeleg()
         {
-            Beleg beleg = new Beleg(null, "Testbeleg", null, DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
+            Beleg beleg = new Beleg(null, "Testing", "Testbeleg", DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
             database.StoreBeleg(beleg).Wait();
             beleg = database.GetBeleg(beleg.Belegnummer.Value).Result;
             Assert.AreEqual("Testbeleg", beleg.Description);
