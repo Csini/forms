@@ -88,7 +88,7 @@ namespace BelegApp.Forms.Models
         /// <param name="Status">Status des Beleges (required).</param>
         /// <param name="Thumbnail">Thumbnail-Darstellung des Beleges.</param>
         /// <param name="BelegSize">Groesse des Beleges.</param>
-        public Beleg(int? Belegnummer = default(int?), string Label = default(string), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?))
+        public Beleg(int? Belegnummer = default(int?), string Label = default(string), string Description = default(string), DateTime? Date = default(DateTime?), string Type = default(string), long? Betrag = default(long?), StatusEnum? Status = default(StatusEnum?), byte[] Thumbnail = default(byte[]), long? BelegSize = default(long?), byte[] Image = default(byte[]))
         {
             this.Belegnummer = Belegnummer;
             this.Label = Label;
@@ -129,6 +129,8 @@ namespace BelegApp.Forms.Models
             {
                 this.Status = Status;
             }
+
+            this.Image = Image;
             this.Thumbnail = Thumbnail;
             this.BelegSize = BelegSize;
         }
