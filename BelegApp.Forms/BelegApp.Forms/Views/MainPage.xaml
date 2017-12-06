@@ -7,35 +7,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BelegApp.Forms.Views.MainPage"
              BackgroundColor="DarkGray"
+             BackgroundImage="old.jpg"
              >
-  <!--<ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-            
-    --><!--Built in Cells--><!--
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <TextCell Text="{Binding .}" />
-        </DataTemplate>
-    </ListView.ItemTemplate>
     
-    --><!--Custom View Cells-->
-    <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    --><!--
-  </ListView>-->
+    
     <ContentPage.Title>
         Belege
     </ContentPage.Title>
@@ -56,17 +31,16 @@
         ItemsSource="{Binding Path=Belege}"
         ItemTapped="Handle_ItemTapped"
         Refreshing="Handle_Refreshing"
+        Margin="0,50,0,50"
         >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
                     <ViewCell.ContextActions>
-                        <!--<MenuItem Clicked="" CommandParameter="{Binding .}" 
-                                  Text="More"/>-->
+ 
                     </ViewCell.ContextActions>
 
                     <Grid>
-                        <Image Source="buttons.png" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" HeightRequest="30" ></Image>
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -74,9 +48,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-
-
-                            <StackLayout  Orientation="Vertical" Margin="0,20,0,2" Grid.Row="1">
+                            <StackLayout  Orientation="Vertical" Margin="20,2,20,2" Grid.Row="1">
                                 <Grid RowSpacing="0" ColumnSpacing="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -100,9 +72,9 @@
                                     <!--Bezeichnung-->
                                     <Label Text="{Binding Belegnummer}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
                                     <!--Betrag-->
-                                    <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" BackgroundColor="Black" TextColor="White" HorizontalTextAlignment="End"/>
+                                    <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" TextColor="Black" HorizontalTextAlignment="End" StyleClass="Header" Font="Bold" />
                                     <!--Datum-->
-                                    <Label Text="{Binding DatumString}" FontSize="Medium" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />
+                                    <Label Text="{Binding DatumString}" FontSize="Small" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="End"/>
                                     <!--Art-->
                                     <Label Text="{Binding Type}" FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
                                     <!--Status-->
@@ -115,7 +87,8 @@
 
                         </Grid>
                     </Grid>
-                  
+
+
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>

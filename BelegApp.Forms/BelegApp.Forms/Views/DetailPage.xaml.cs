@@ -12,16 +12,28 @@ using Xamarin.Forms.Xaml;
 
 namespace BelegApp.Forms.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DetailPage : ContentPage
-	{
-        private long? _belegnummer;
-		public DetailPage (long? belegnummer)
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DetailPage : ContentPage
+    {
+        private int? _belegnummer;
+        public DetailPage(int? belegnummer, INavigation navigation)
+        {
+            InitializeComponent();
             _belegnummer = belegnummer;
-            //Beleg beleg = 
-            //BindingContext = new BelegDetailsViewModel()
-		}
-	}
+            Beleg beleg = null;
+            Action callback = new Action(() =>
+            {
+                navigation.PopToRootAsync();
+            });
+            if (_belegnummer.HasValue)
+                beleg = Storage.Database.GetBeleg(_belegnummer.Value).Result;
+            if (beleg == null)
+                BindingContext = new BelegDetailsViewModel();
+            else
+                BindingContext = new BelegDetailsViewModel(beleg);
+
+            //Callback setzen
+            (BindingContext as BelegDetailsViewModel).Callback = callback;
+        }
+    }
 }

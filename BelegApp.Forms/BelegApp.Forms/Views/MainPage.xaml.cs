@@ -34,7 +34,7 @@ namespace BelegApp.Forms.Views
 
             try
             {
-                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer));
+                await Navigation.PushAsync(new DetailPage(beleg.Belegnummer, Navigation));
             }
             catch (Exception ex)
             {

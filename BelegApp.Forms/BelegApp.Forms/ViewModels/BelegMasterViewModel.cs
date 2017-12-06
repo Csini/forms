@@ -23,9 +23,10 @@ namespace BelegApp.Forms.ViewModels
         {
             AddNewBelegCommand = new Command(() =>
             {
-                navigation.PushAsync(new DetailPage(null));
+                navigation.PushAsync(new DetailPage(null, navigation));
             });
 
+            
             Belege = new ObservableCollection<BelegDetailsViewModel>(); // Ladeoperation von Service
 
             if (belegList != null)

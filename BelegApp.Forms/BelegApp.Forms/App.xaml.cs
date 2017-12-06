@@ -1,5 +1,6 @@
 ﻿using BelegApp.Forms.Models;
 using BelegApp.Forms.Services;
+using BelegApp.Forms.Utils;
 using BelegApp.Forms.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,8 @@ namespace BelegApp.Forms
 
 		protected override void OnStart ()
 		{
-			// Handle when your app starts
-		}
+            StaticValues.UpdateStaticValues();
+        }
 
 		protected override void OnSleep ()
 		{
@@ -32,7 +33,9 @@ namespace BelegApp.Forms
 
 		protected override void OnResume ()
 		{
-			// Handle when your app resumes
-		}
+            StaticValues.UpdateStaticValues();
+        }
+
+
 	}
 }

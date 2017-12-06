@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace BelegApp.Forms.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
