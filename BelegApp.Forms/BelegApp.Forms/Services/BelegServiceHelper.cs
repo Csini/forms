@@ -65,7 +65,7 @@ namespace BelegApp.Forms.Services
             {
                 locals.Add(beleg.Belegnummer.Value, beleg);
             }
-            List<Task<int>> updates = new List<Task<int>>();
+            List<Beleg> updates = new List<Beleg>();
             foreach (Beleg beleg in backend)
             {
                 int nr = beleg.Belegnummer.Value;
@@ -80,10 +80,10 @@ namespace BelegApp.Forms.Services
                     {
                         beleg.Image = await BelegService.GetBelegImage(BelegService.USER, nr);
                     }
-                    updates.Add(database.StoreBeleg(beleg));
+                    updates.Add(beleg);
                 }
             }
-            await Task.WhenAll(updates.ToArray());
+            await database.StoreBelege(updates.ToArray());
             return updates.Count;
         }
     }
