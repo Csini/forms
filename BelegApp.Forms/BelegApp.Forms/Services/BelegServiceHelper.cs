@@ -45,8 +45,7 @@ namespace BelegApp.Forms.Services
                 throw new Exception("Vermisse Beleg-ID!");
             }
 
-            await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
-
+            beleg.Thumbnail = await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
             beleg.Status = Beleg.StatusEnum.EXPORTIERT;
             await database.StoreBeleg(beleg);
         }
@@ -56,12 +55,7 @@ namespace BelegApp.Forms.Services
             Task<Beleg[]> backend = BelegService.GetBelegList(BelegService.USER);
             Task<Beleg[]> local = Storage.Database.GetBelege();
 
-            await backend;
-            await local;
-
-            Task<int> ret = DoRefreshStatus(backend.Result, local.Result);
-            await ret;
-            return ret.Result;
+            return await DoRefreshStatus(await backend, await local);
         }
 
         internal async Task<int> DoRefreshStatus(Beleg[] backend, Beleg[] local)
