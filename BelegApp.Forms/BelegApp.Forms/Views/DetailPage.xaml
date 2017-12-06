@@ -31,6 +31,7 @@
             <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
             <Label Text="Datum" />
             <DatePicker Date="{Binding Datum, Mode=TwoWay}" />
+            <Image Source="{Binding ImageImageSource}" />
         </StackLayout>
         <!--<Grid>
             <Grid.ColumnDefinitions>

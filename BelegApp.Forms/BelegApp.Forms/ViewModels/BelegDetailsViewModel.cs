@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using BelegApp.Forms.ValidationRule;
 using BelegApp.Forms.Services;
+using System.IO;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -20,9 +21,12 @@ namespace BelegApp.Forms.ViewModels
         private DateTime? _datum;
         private ValidatableObject<string> _validatableType;
         private byte[] _thumbnail;
+        private ImageSource _thumbnailImageSource;
         private long? _belegSize;
         private string _iconName;
         private decimal? _betrag;
+        private byte[] _image;
+        private ImageSource _imageImageSource;
 
         public BelegDetailsViewModel()
         {
@@ -48,6 +52,7 @@ namespace BelegApp.Forms.ViewModels
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
+            _image = beleg.Image;
 
             Init();
         }
@@ -235,10 +240,51 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (Equals(_thumbnail, value)) return;
                 _thumbnail = value;
+                _thumbnailImageSource = null;
                 OnPropertyChanged(nameof(Thumbnail));
+                OnPropertyChanged(nameof(ThumbnailImageSource));
             }
         }
 
+        public ImageSource ThumbnailImageSource
+        {
+            get
+            {
+                if ((_thumbnailImageSource == null) && (_thumbnail != null))
+                {
+                    _thumbnailImageSource = ImageSource.FromStream(() => new MemoryStream(_thumbnail));
+                }
+                return _thumbnailImageSource;
+            }
+        }
+
+        public byte[] Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                if (Equals(_image, value)) return;
+                _image = value;
+                _imageImageSource = null;
+                OnPropertyChanged(nameof(Image));
+                OnPropertyChanged(nameof(ImageImageSource));
+            }
+        }
+
+        public ImageSource ImageImageSource
+        {
+            get
+            {
+                if ((_imageImageSource == null) && (_image != null))
+                {
+                    _imageImageSource = ImageSource.FromStream(() => new MemoryStream(_image));
+                }
+                return _imageImageSource;
+            }
+        }
         public bool IsEditable
         {
             get

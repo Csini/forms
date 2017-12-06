@@ -59,6 +59,7 @@
                                         <!--Datum, Art, Status-->
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
                                         <ColumnDefinition Width="*" />
                                         <!--Bezeichnung, Datum-->
                                         <ColumnDefinition Width="*"/>
@@ -67,21 +68,23 @@
                                         <!--Bezeichnung, Art-->
                                         <ColumnDefinition Width="*"/>
                                         <!--Betrag, Art-->
-                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="30"/>
                                         <!--Status-->
                                     </Grid.ColumnDefinitions>
 
+                                    <!--Kleinansicht-->
+                                    <Image Source="{Binding ThumbnailImageSource}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" StyleClass="Thumbnail"/>
                                     <!--Bezeichnung-->
-                                    <Label Text="{Binding Description}"  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+                                    <Label Text="{Binding Description}"  Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"/>
                                     <!--Betrag-->
-                                    <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="3" Grid.Row="0" TextColor="Black" HorizontalTextAlignment="End" StyleClass="Header" Font="Bold" />
+                                    <Label Text="{Binding Betrag}" FontSize="Small" Grid.Column="4" Grid.Row="0" TextColor="Black" HorizontalTextAlignment="End" StyleClass="Header" Font="Bold" />
                                     <!--Datum-->
-                                    <Label Text="{Binding DatumString}" FontSize="Small" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="End"/>
+                                    <Label Text="{Binding DatumString}" FontSize="Small" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalTextAlignment="End"/>
                                     <!--Art-->
-                                    <Label FontSize="Medium"  Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
+                                    <Label FontSize="Medium"  Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
                                     <!--Status-->
 
-                                    <Image Source="{Binding IconName}" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" WidthRequest="50" StyleClass="Thumbnail"/>
+                                    <Image Source="{Binding IconName}" Grid.Column="5" Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" StyleClass="Thumbnail"/>
 
 
                                 </Grid>
