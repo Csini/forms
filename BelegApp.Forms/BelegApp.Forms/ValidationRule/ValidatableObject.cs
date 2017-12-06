@@ -45,7 +45,8 @@ namespace BelegApp.Forms.ValidationRule
             get => innerValue;
             set
             {
-                if (value.Equals(innerValue))
+                //if (value.Equals(innerValue))
+                if (Equals(innerValue, value))
                 {
                     var i = errors.Count;
                 }
