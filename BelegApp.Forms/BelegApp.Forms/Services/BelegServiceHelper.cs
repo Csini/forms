@@ -38,14 +38,38 @@ namespace BelegApp.Forms.Services
 
         internal async Task ExportBeleg(Beleg beleg)
         {
-            beleg.Belegnummer = await BelegService.CreateBeleg(BelegService.USER, beleg);
+            if (beleg.Image == null)
+            {
+                return;
+            }
+
+            try
+            {
+                beleg.Belegnummer = await BelegService.CreateBeleg(BelegService.USER, beleg);
+            }
+            catch (Exception ex)
+            {
+                //TODO what?
+                return;
+            }
 
             if (!beleg.Belegnummer.HasValue)
             {
                 throw new Exception("Vermisse Beleg-ID!");
             }
 
-            beleg.Thumbnail = await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
+            if (beleg.Image != null)
+            {
+                try
+                {
+                    beleg.Thumbnail = await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
+                }
+                catch (Exception ex)
+                {
+                    //TODO what?
+                }
+            }
+            
             beleg.Status = Beleg.StatusEnum.EXPORTIERT;
             await database.StoreBeleg(beleg);
         }

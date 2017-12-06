@@ -41,7 +41,7 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (!selectMode) { return; }
 
-                Beleg[] selectedBelege = null; //TODO filter alle selektierten Belege
+                Beleg[] selectedBelege = getSelectedBelege().ToArray();
 
                 await new BelegServiceHelper().ExportBelege(selectedBelege);
 
@@ -53,7 +53,7 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (!selectMode) { return; }
 
-                Beleg[] selectedBelege = new Beleg[0]; //TODO filter alle selektierten Belege
+                Beleg[] selectedBelege = getSelectedBelege().ToArray();
                 int[] belegNummern = new int[selectedBelege.Length];
                 for (int ix = 0; ix < selectedBelege.Length; ++ix)
                 {
@@ -83,12 +83,25 @@ namespace BelegApp.Forms.ViewModels
             }
         }
 
-        public void resetSelectedBelege()
+        internal void resetSelectedBelege()
         {
             foreach (BelegDetailsViewModel beleg in _belege)
             {
                 beleg.IsSelected = false;
             }
+        }
+
+        internal List<Beleg> getSelectedBelege()
+        {
+            var selectedBelegList = new List<Beleg>();
+            foreach (BelegDetailsViewModel beleg in _belege)
+            {
+                if (beleg.IsSelected)
+                {
+                    selectedBelegList.Add(Storage.Database.GetBeleg(beleg.Belegnummer.Value).Result);
+                }
+            }
+            return selectedBelegList;
         }
 
         public ObservableCollection<BelegDetailsViewModel> Belege
