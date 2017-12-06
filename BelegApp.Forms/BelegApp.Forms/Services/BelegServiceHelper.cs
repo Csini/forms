@@ -65,18 +65,25 @@ namespace BelegApp.Forms.Services
             {
                 locals.Add(beleg.Belegnummer.Value, beleg);
             }
-            List<Task<int>> updates = new List<Task<int>>();
+            List<Beleg> updates = new List<Beleg>();
             foreach (Beleg beleg in backend)
             {
                 int nr = beleg.Belegnummer.Value;
-                if (locals.ContainsKey(nr))
+                if (beleg.Status < Beleg.StatusEnum.GEBUCHT || locals.ContainsKey(nr))
                 {
-                    Beleg loc = locals[nr];
-                    loc.Status = beleg.Status;
-                    updates.Add(database.StoreBeleg(loc));
+                    Beleg loc;
+                    if (locals.TryGetValue(nr, out loc) && beleg.BelegSize == loc.BelegSize)
+                    {
+                        beleg.Image = loc.Image;
+                    }
+                    else
+                    {
+                        beleg.Image = await BelegService.GetBelegImage(BelegService.USER, nr);
+                    }
+                    updates.Add(beleg);
                 }
             }
-            await Task.WhenAll(updates.ToArray());
+            await database.StoreBelege(updates.ToArray());
             return updates.Count;
         }
     }

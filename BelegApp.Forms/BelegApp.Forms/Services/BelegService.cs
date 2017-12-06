@@ -128,6 +128,21 @@ namespace BelegApp.Forms.Services
             return result;
         }
 
+        public static async Task<byte[]> CreateThumbnail(byte[] image)
+        {
+            // Parameter prüfen
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+
+            byte[] result = await WebRequester.HttpPost<byte[], byte[]>(
+                serviceBaseUrl,
+                "/thumbnail",
+                image);
+            return result;
+        }
+
         public static async Task DeleteBeleg(string user, int belegnummer)
         {
             // Parameter prüfen

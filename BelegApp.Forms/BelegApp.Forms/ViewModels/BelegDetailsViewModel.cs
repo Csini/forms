@@ -8,6 +8,8 @@ using BelegApp.Forms.Utils;
 using System.Windows.Input;
 using Xamarin.Forms;
 using BelegApp.Forms.ValidationRule;
+using BelegApp.Forms.Services;
+using System.IO;
 
 namespace BelegApp.Forms.ViewModels
 {
@@ -19,9 +21,12 @@ namespace BelegApp.Forms.ViewModels
         private DateTime? _datum;
         private ValidatableObject<string> _validatableType;
         private byte[] _thumbnail;
+        private ImageSource _thumbnailImageSource;
         private long? _belegSize;
         private string _iconName;
         private decimal? _betrag;
+        private byte[] _image;
+        private ImageSource _imageImageSource;
 
         private bool selected;
 
@@ -39,16 +44,20 @@ namespace BelegApp.Forms.ViewModels
             if (beleg == null)
                 throw new ArgumentNullException("beleg");
 
+            _validatableDescription = new ValidatableObject<string>(true);
+            _validatableType = new ValidatableObject<string>(true);
+
             Belegnummer = beleg.Belegnummer;
             _statusEnum = beleg.Status;
-            _validatableDescription = new ValidatableObject<string>(true);
+            
             Description = beleg.Description;
             _datum = beleg.Date;
-            _validatableType = new ValidatableObject<string>(true);
+            
             Type = beleg.Type;
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
+            _image = beleg.Image;
 
             selected = false;
 
@@ -69,7 +78,12 @@ namespace BelegApp.Forms.ViewModels
 
             SaveBelegCommand = new Command(() =>
             {
-                var result = Storage.Database.StoreBeleg(this.GetBusinessObject()).Result;
+                Beleg beleg = this.GetBusinessObject();
+                if (beleg.Thumbnail == null && beleg.Image != null)
+                {
+                    beleg.Thumbnail = BelegService.CreateThumbnail(beleg.Image).Result;
+                }
+                var result = Storage.Database.StoreBeleg(beleg).Result;
                 if (result > 0)
                     Callback();
             }, () => CanSave);
@@ -233,10 +247,51 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (Equals(_thumbnail, value)) return;
                 _thumbnail = value;
+                _thumbnailImageSource = null;
                 OnPropertyChanged(nameof(Thumbnail));
+                OnPropertyChanged(nameof(ThumbnailImageSource));
             }
         }
 
+        public ImageSource ThumbnailImageSource
+        {
+            get
+            {
+                if ((_thumbnailImageSource == null) && (_thumbnail != null))
+                {
+                    _thumbnailImageSource = ImageSource.FromStream(() => new MemoryStream(_thumbnail));
+                }
+                return _thumbnailImageSource;
+            }
+        }
+
+        public byte[] Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                if (Equals(_image, value)) return;
+                _image = value;
+                _imageImageSource = null;
+                OnPropertyChanged(nameof(Image));
+                OnPropertyChanged(nameof(ImageImageSource));
+            }
+        }
+
+        public ImageSource ImageImageSource
+        {
+            get
+            {
+                if ((_imageImageSource == null) && (_image != null))
+                {
+                    _imageImageSource = ImageSource.FromStream(() => new MemoryStream(_image));
+                }
+                return _imageImageSource;
+            }
+        }
         public bool IsSelected
         {
             get
@@ -255,7 +310,7 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
-                return (Status != StatusEnum.ERFASST);
+                return (Status == StatusEnum.ERFASST);
             }
         }
 

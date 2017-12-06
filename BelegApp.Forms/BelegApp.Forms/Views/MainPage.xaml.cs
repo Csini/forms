@@ -52,7 +52,7 @@ namespace BelegApp.Forms.Views
                 }
             }
             //Deselect Item
-            ((ListView) sender).SelectedItem = null;
+            ((ListView)sender).SelectedItem = null;
         }
 
         async void Handle_Refreshing(Object sender, EventArgs e)
@@ -65,7 +65,7 @@ namespace BelegApp.Forms.Views
                 try
                 {
                     // ViewModel initialisieren
-                    refreshBelegList().Wait();
+                    await refreshBelegList();
                 }
                 finally
                 {
@@ -86,10 +86,15 @@ namespace BelegApp.Forms.Views
         private async Task refreshBelegList()
         {
             // Belegliste in Datenbank mit Online-Belegen aktualisieren
-            new BelegServiceHelper().RefreshStatus().Wait();
+            await new BelegServiceHelper().RefreshStatus();
 
             // Belegliste aus der Datenbank erneut lesen und anzeigen
-            getDatabaseBelegList().Wait();
+            await getDatabaseBelegList();
+        }
+
+        protected async override void OnAppearing()
+        {
+            refreshBelegList();
         }
     }
 }

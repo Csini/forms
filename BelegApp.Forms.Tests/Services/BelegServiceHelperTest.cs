@@ -45,9 +45,29 @@ namespace BelegApp.Forms.Tests.Services
         }
 
         [TestMethod]
-        public void OnlyBackendShouldChangeNothing()
+        public void OnlyBackendShouldInsert()
         {
-            Assert.AreEqual(0, helper.DoRefreshStatus(new Beleg[] { createBeleg(Beleg.StatusEnum.ERFASST) }, new Beleg[0]).Result);
+            Beleg beleg = createBeleg(Beleg.StatusEnum.ERFASST);
+            Assert.AreEqual(1, helper.DoRefreshStatus(new Beleg[] { beleg }, new Beleg[0]).Result);
+            Beleg[] result = database.GetBelege().Result;
+            Assert.AreEqual(1, result.Length, result.ToString());
+            Assert.AreEqual(beleg.Status, result[0].Status);
+        }
+
+        [TestMethod]
+        public void OnlyBackendGebuchtShouldNotInsert()
+        {
+            Beleg beleg = createBeleg(Beleg.StatusEnum.GEBUCHT);
+            Assert.AreEqual(0, helper.DoRefreshStatus(new Beleg[] { beleg }, new Beleg[0]).Result);
+            Beleg[] result = database.GetBelege().Result;
+            Assert.AreEqual(0, result.Length, result.ToString());
+        }
+
+        [TestMethod]
+        public void OnlyBackendAbgelehntShouldNotInsert()
+        {
+            Beleg beleg = createBeleg(Beleg.StatusEnum.ABGELEHNT);
+            Assert.AreEqual(0, helper.DoRefreshStatus(new Beleg[] { beleg }, new Beleg[0]).Result);
             Beleg[] result = database.GetBelege().Result;
             Assert.AreEqual(0, result.Length, result.ToString());
         }
@@ -76,16 +96,41 @@ namespace BelegApp.Forms.Tests.Services
         }
 
         [TestMethod]
-        public void UnmatchedShouldChangeNothing()
+        public void MatchedGebuchtShouldChange()
+        {
+            Beleg backend = createBeleg(Beleg.StatusEnum.GEBUCHT);
+            Beleg local = createBeleg(Beleg.StatusEnum.ERFASST);
+            database.StoreBeleg(local).Wait();
+            Assert.AreEqual(1, helper.DoRefreshStatus(new Beleg[] { backend }, new Beleg[] { local }).Result);
+            Beleg[] result = database.GetBelege().Result;
+            Assert.AreEqual(1, result.Length, result.ToString());
+            Assert.AreEqual(backend.Status, result[0].Status);
+        }
+
+        [TestMethod]
+        public void MatchedAbgelehntShouldChange()
+        {
+            Beleg backend = createBeleg(Beleg.StatusEnum.ABGELEHNT);
+            Beleg local = createBeleg(Beleg.StatusEnum.ERFASST);
+            database.StoreBeleg(local).Wait();
+            Assert.AreEqual(1, helper.DoRefreshStatus(new Beleg[] { backend }, new Beleg[] { local }).Result);
+            Beleg[] result = database.GetBelege().Result;
+            Assert.AreEqual(1, result.Length, result.ToString());
+            Assert.AreEqual(backend.Status, result[0].Status);
+        }
+
+        // Backend not testable! [TestMethod]
+        public void UnmatchedShouldInsert()
         {
             Beleg backend = createBeleg(Beleg.StatusEnum.EXPORTIERT);
             backend.Belegnummer = 2;
             Beleg local = createBeleg(Beleg.StatusEnum.ERFASST);
             database.StoreBeleg(local).Wait();
-            Assert.AreEqual(0, helper.DoRefreshStatus(new Beleg[] { backend }, new Beleg[] { local }).Result, "DoRefreshStatus");
+            Assert.AreEqual(1, helper.DoRefreshStatus(new Beleg[] { backend }, new Beleg[] { local }).Result, "DoRefreshStatus");
             Beleg[] result = database.GetBelege().Result;
-            Assert.AreEqual(1, result.Length, result.ToString());
+            Assert.AreEqual(2, result.Length, result.ToString());
             Assert.AreEqual(local.Status, result[0].Status);
+            Assert.AreEqual(backend.Status, result[1].Status);
         }
 
         [TestMethod]
