@@ -35,14 +35,5 @@ namespace BelegApp.Forms
 		{
             StaticValues.UpdateStaticValues();
         }
-
-
-        private async Task getBelegList()
-        {
-            // Belegliste online holen
-            Beleg[] belegList = Storage.Database.GetBelege().Result;
-            BelegMasterViewModel = new BelegMasterViewModel(MainPage.Navigation, belegList);
-            MainPage.BindingContext = BelegMasterViewModel;
-        }
 	}
 }
