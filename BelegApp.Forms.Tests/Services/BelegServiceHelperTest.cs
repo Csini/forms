@@ -87,6 +87,23 @@ namespace BelegApp.Forms.Tests.Services
             Assert.AreEqual(1, result.Length, result.ToString());
             Assert.AreEqual(local.Status, result[0].Status);
         }
+
+        [TestMethod]
+        public void MultipleMatchedShouldChangeAll()
+        {
+            Beleg backend1 = createBeleg(Beleg.StatusEnum.ABGELEHNT);
+            Beleg local1 = createBeleg(Beleg.StatusEnum.ERFASST);
+            database.StoreBeleg(local1).Wait();
+            Beleg backend2 = createBeleg(Beleg.StatusEnum.GEBUCHT);
+            Beleg local2 = createBeleg(Beleg.StatusEnum.ERFASST);
+            backend2.Belegnummer = 2;
+            local2.Belegnummer = 2;
+            Assert.AreEqual(2, helper.DoRefreshStatus(new Beleg[] { backend1, backend2 }, new Beleg[] { local1, local2 }));
+            Beleg[] result = database.GetBelege().Result;
+            Assert.AreEqual(2, result.Length, result.ToString());
+            Assert.AreEqual(backend1.Status, result[0].Status);
+            Assert.AreEqual(backend2.Status, result[1].Status);
+        }
     }
 }
 
