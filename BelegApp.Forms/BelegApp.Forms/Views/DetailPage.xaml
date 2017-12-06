@@ -3,27 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BelegApp.Forms.Views.DetailPage"
              xmlns:l="clr-namespace:BelegApp.Forms.Views.Converter"
-             xmlns:staticvalues="clr-namespace:BelegApp.Forms.Utils">
+             xmlns:staticvalues="clr-namespace:BelegApp.Forms.Utils"
+             BackgroundColor="DarkGray"
+             BackgroundImage="old.jpg"
+             >
     <ContentPage.Resources>
         <ResourceDictionary>
             <l:DecimalConverter x:Key="decimalConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Title>
-        .
+        
     </ContentPage.Title>
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Speichern" Command="{Binding SaveBelegCommand}" Icon="save.png"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout IsEnabled="{Binding Path=IsEditable}">
-            <Label Text="Beschreibung" />
+        <StackLayout IsEnabled="{Binding Path=IsEditable}" Margin="30,50,30,50">
             <Entry Placeholder="Beschreibung" Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
-            <Label Text="Art" />
-            <Picker SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
-            <Label Text="Betrag" />
-            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" />
+            <Picker Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}"/>
+            <Label Text="Betrag" FontSize="Micro"/>
+            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
             <DatePicker/>
         </StackLayout>
         <!--<Grid>

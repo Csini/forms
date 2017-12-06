@@ -35,5 +35,13 @@ namespace BelegApp.Forms.Views
             //Callback setzen
             (BindingContext as BelegDetailsViewModel).Callback = callback;
         }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //var ctl = sender as Entry;
+            //if(ctl != null)
+            //    ctl.Text = "300";
+
+        }
     }
 }
