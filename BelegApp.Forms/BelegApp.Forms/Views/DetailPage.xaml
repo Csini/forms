@@ -22,12 +22,11 @@
     <ContentPage.Content>
         <!--IsEnabled="{Binding Path=IsEditable}"-->
         <StackLayout  Margin="30,50,30,50">
-            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" />
+            <Entry Keyboard="Default" Text="{Binding Description, Mode=TwoWay}" Placeholder="Description"/>
             <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
-            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" />
-            <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" />
+            <Label Text="{Binding ValidatableDescription.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
             <Picker  Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
-            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" />
+            <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed"  FontSize="Micro"/>
             <Label Text="Betrag" FontSize="Micro"/>
             <Entry Placeholder="10" Keyboard="Numeric" Text="{Binding Betrag, Mode=TwoWay, Converter={StaticResource decimalConverter}}" HorizontalTextAlignment="End" TextChanged="Entry_TextChanged" />
             <Label Text="Datum" />
