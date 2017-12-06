@@ -81,7 +81,6 @@
                                     <!--Art-->
                                     <Label FontSize="Medium"  Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"/>
                                     <!--Status-->
-
                                     <Image Source="{Binding IconName}" Grid.Column="5" Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" StyleClass="Thumbnail"/>
 
 
