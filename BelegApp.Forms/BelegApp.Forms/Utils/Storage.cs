@@ -48,6 +48,16 @@ namespace BelegApp.Forms.Utils
             return database.Table<Beleg>().ToListAsync().ContinueWith((lt) => lt.Result.ToArray());
         }
 
+        public async Task StoreBelege(Beleg[] belege)
+        {
+            List<Task<int>> storeTasks = new List<Task<int>>();
+            foreach (Beleg beleg in belege)
+            {
+                storeTasks.Add(StoreBeleg(beleg));
+            }
+            await Task.WhenAll(storeTasks);
+        }
+
         public Task<int> StoreBeleg(Beleg beleg)
         {
             if (beleg.Belegnummer == null || !beleg.Belegnummer.HasValue)

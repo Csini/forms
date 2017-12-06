@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using BelegApp.Forms.Models;
 using static BelegApp.Forms.Models.Beleg;
 using BelegApp.Forms.Utils;
@@ -212,9 +213,7 @@ namespace BelegApp.Forms.ViewModels
         }
 
         public Action Callback { get; set; }
-
-        public ICommand SaveBelegCommand { get; private set; }
-
+        
         private Beleg GetBusinessObject()
         {
             // Konvertierung passieren hier
@@ -224,5 +223,8 @@ namespace BelegApp.Forms.ViewModels
             long betragInCent = long.Parse((dec * 100).ToString());
             return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
+
+        public ICommand SaveBelegCommand { get; private set; }
+
     }
 }

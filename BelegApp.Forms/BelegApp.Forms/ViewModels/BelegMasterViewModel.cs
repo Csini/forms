@@ -33,7 +33,7 @@ namespace BelegApp.Forms.ViewModels
             {
                 foreach (Beleg beleg in belegList)
                 {
-                    Belege.Add(new BelegDetailsViewModel(beleg));
+                    _belege.Add(new BelegDetailsViewModel(beleg));
                 }
             }
         }
@@ -53,5 +53,9 @@ namespace BelegApp.Forms.ViewModels
         }
 
         public ICommand AddNewBelegCommand { get; private set; }
+        public ICommand ExportBelegeCommand { get; private set; }
+        public ICommand SelectBelegeCommand { get; private set; }
+        public ICommand DeleteBelegeCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
     }
 }

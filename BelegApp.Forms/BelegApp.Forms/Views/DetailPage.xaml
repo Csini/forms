@@ -13,7 +13,7 @@
         .
     </ContentPage.Title>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Save" Text="S" Priority="0" Command="{Binding SaveBelegCommand}" />
+        <ToolbarItem Name="Speichern" Command="{Binding SaveBelegCommand}" Icon="save.png"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
