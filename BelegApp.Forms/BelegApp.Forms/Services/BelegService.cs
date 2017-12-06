@@ -155,5 +155,15 @@ namespace BelegApp.Forms.Services
                 serviceBaseUrl,
                 string.Format("/{0}/{1}", user, belegnummer));
         }
+
+        public static async Task DeleteBelege(string user, int[] belegnummern)
+        {
+            var tasks = new List<Task>();
+            foreach (int belegnummer in belegnummern)
+            {
+                tasks.Add(DeleteBeleg(user, belegnummer));
+            }
+            await Task.WhenAll(tasks);
+        }
     }
 }

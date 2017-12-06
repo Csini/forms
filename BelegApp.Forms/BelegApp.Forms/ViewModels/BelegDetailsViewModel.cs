@@ -17,18 +17,25 @@ namespace BelegApp.Forms.ViewModels
     {
         private int? _belegNummer;
         private StatusEnum? _statusEnum;
+        private ValidatableObject<string> _validatableLabel;
         private ValidatableObject<string> _validatableDescription;
         private DateTime? _datum;
         private ValidatableObject<string> _validatableType;
         private byte[] _thumbnail;
+        private ImageSource _thumbnailImageSource;
         private long? _belegSize;
         private string _iconName;
         private decimal? _betrag;
+        private byte[] _image;
+        private ImageSource _imageImageSource;
+
+        private bool selected;
 
         public BelegDetailsViewModel()
         {
             Status = StatusEnum.ERFASST;
             Datum = DateTime.Now;
+            _validatableLabel = new ValidatableObject<string>(true);
             _validatableDescription = new ValidatableObject<string>(true);
             _validatableType = new ValidatableObject<string>(true);
             Init();
@@ -39,12 +46,13 @@ namespace BelegApp.Forms.ViewModels
             if (beleg == null)
                 throw new ArgumentNullException("beleg");
 
+            _validatableLabel = new ValidatableObject<string>(true);
             _validatableDescription = new ValidatableObject<string>(true);
             _validatableType = new ValidatableObject<string>(true);
 
             Belegnummer = beleg.Belegnummer;
             _statusEnum = beleg.Status;
-            
+            Label = beleg.Label;
             Description = beleg.Description;
             _datum = beleg.Date;
             
@@ -52,6 +60,9 @@ namespace BelegApp.Forms.ViewModels
             _thumbnail = beleg.Thumbnail;
             _belegSize = beleg.BelegSize;
             _iconName = beleg.Status + ".png";
+            _image = beleg.Image;
+
+            selected = false;
 
             Init();
         }
@@ -63,7 +74,7 @@ namespace BelegApp.Forms.ViewModels
                 // Update IsEditable
                 if (e.PropertyName == nameof(Status))
                     OnPropertyChanged(nameof(IsEditable));
-                if (e.PropertyName == nameof(Description) || e.PropertyName == nameof(Type))
+                if (e.PropertyName == nameof(Label) || e.PropertyName == nameof(Description) || e.PropertyName == nameof(Type))
                     ((Command)SaveBelegCommand).ChangeCanExecute();
                 //OnPropertyChanged(nameof(CanSave));
             };
@@ -138,6 +149,34 @@ namespace BelegApp.Forms.ViewModels
             get
             {
                 return _iconName;
+            }
+        }
+
+        public string Label
+        {
+            get
+            {
+                return ValidatableLabel.Value;
+            }
+            set
+            {
+                if (Equals(ValidatableLabel.Value, value)) return;
+                ValidatableLabel.Value = value;
+                OnPropertyChanged(nameof(Label));
+            }
+        }
+
+        public ValidatableObject<string> ValidatableLabel
+        {
+            get
+            {
+                return _validatableLabel;
+            }
+            set
+            {
+                //if (Equals(_label, value)) return;
+                _validatableLabel = value;
+                OnPropertyChanged(nameof(Label));
             }
         }
 
@@ -262,7 +301,62 @@ namespace BelegApp.Forms.ViewModels
             {
                 if (Equals(_thumbnail, value)) return;
                 _thumbnail = value;
+                _thumbnailImageSource = null;
                 OnPropertyChanged(nameof(Thumbnail));
+                OnPropertyChanged(nameof(ThumbnailImageSource));
+            }
+        }
+
+        public ImageSource ThumbnailImageSource
+        {
+            get
+            {
+                if ((_thumbnailImageSource == null) && (_thumbnail != null))
+                {
+                    _thumbnailImageSource = ImageSource.FromStream(() => new MemoryStream(_thumbnail));
+                }
+                return _thumbnailImageSource;
+            }
+        }
+
+        public byte[] Image
+        {
+            get
+            {
+                return _image;
+            }
+            set
+            {
+                if (Equals(_image, value)) return;
+                _image = value;
+                _imageImageSource = null;
+                OnPropertyChanged(nameof(Image));
+                OnPropertyChanged(nameof(ImageImageSource));
+            }
+        }
+
+        public ImageSource ImageImageSource
+        {
+            get
+            {
+                if ((_imageImageSource == null) && (_image != null))
+                {
+                    _imageImageSource = ImageSource.FromStream(() => new MemoryStream(_image));
+                }
+                return _imageImageSource;
+            }
+        }
+        public bool IsSelected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if (Equals(selected, value)) return;
+                selected = value;
+                OnPropertyChanged(nameof(IsSelected));
             }
         }
 
@@ -278,10 +372,11 @@ namespace BelegApp.Forms.ViewModels
         {
             get
             {
+                ValidatableLabel.Validate();
                 ValidatableDescription.Validate();
                 ValidatableType.Validate();
                 return
-                    ValidatableDescription.IsValid && ValidatableType.IsValid;
+                    ValidatableLabel.IsValid && ValidatableDescription.IsValid && ValidatableType.IsValid;
             }
         }
 
@@ -301,6 +396,10 @@ namespace BelegApp.Forms.ViewModels
         public ICommand SelectPictureCommand { get; private set; }
         private void AddValidations()
         {
+            _validatableLabel.Validations.Add(new IsNotNullOrEmptyRule<string>
+            {
+                ValidationMessage = "Bezeichnung eingeben"
+            });
             _validatableDescription.Validations.Add(new IsNotNullOrEmptyRule<string>
             {
                 ValidationMessage = "Beschreibung eingeben"
@@ -316,8 +415,9 @@ namespace BelegApp.Forms.ViewModels
             // zB Konvertierung des Betrags in Cent
 #warning it's too late - hacky
             var dec = decimal.Parse(Betrag.Value.ToString("0.##"));
-            long betragInCent = long.Parse((dec * 100).ToString());
-            return new Beleg(Belegnummer, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
+            string cents = (dec * 100).ToString("0");
+            long betragInCent = long.Parse(cents);
+            return new Beleg(Belegnummer, Label, Description, Datum, Type, betragInCent, Status, Thumbnail, BelegSize);
         }
 
     }

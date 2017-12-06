@@ -41,7 +41,7 @@ namespace BelegApp.Forms.Tests.Services
 
         private static Beleg createBeleg(Beleg.StatusEnum status)
         {
-            return new Beleg(1, "Backend", DateTime.UtcNow.Date, "Test", 1, status, null, null);
+            return new Beleg(1, "Backend", null, DateTime.UtcNow.Date, "Test", 1, status, null, null);
         }
 
         [TestMethod]

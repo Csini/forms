@@ -10,18 +10,58 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using static BelegApp.Forms.Models.Beleg;
+using BelegApp.Forms.Services;
 
 namespace BelegApp.Forms.ViewModels
 {
     public class BelegMasterViewModel : BaseViewModel
     {
         private ObservableCollection<BelegDetailsViewModel> _belege;
+
+        public bool selectMode {get; set;}
+
         public BelegMasterViewModel(INavigation navigation) : this(navigation, null)
         {
         }
 
         public BelegMasterViewModel(INavigation navigation, Beleg[] belegList)
         {
+            selectMode = false;
+
+            SelectBelegeCommand = new Command(() =>
+            {
+                selectMode = !selectMode;
+                if (!selectMode)
+                {
+                    resetSelectedBelege();
+                }
+            });
+
+            ExportBelegeCommand = new Command(async () =>
+            {
+                if (!selectMode) { return; }
+
+                Beleg[] selectedBelege = null; //TODO filter alle selektierten Belege
+
+                await new BelegServiceHelper().ExportBelege(selectedBelege);
+
+                resetSelectedBelege();
+                selectMode = false;
+            });
+
+            DeleteBelegeCommand = new Command(async () =>
+            {
+                if (!selectMode) { return; }
+
+                Beleg[] selectedBelege = null; //TODO filter alle selektierten Belege
+                int[] belegNummern = null;//
+
+                await BelegService.DeleteBelege(BelegService.USER, belegNummern);
+
+                resetSelectedBelege();
+                selectMode = false;
+            });
+
             AddNewBelegCommand = new Command(() =>
             {
                 navigation.PushAsync(new DetailPage(null, navigation));
@@ -35,6 +75,14 @@ namespace BelegApp.Forms.ViewModels
                 {
                     _belege.Add(new BelegDetailsViewModel(beleg));
                 }
+            }
+        }
+
+        public void resetSelectedBelege()
+        {
+            foreach (BelegDetailsViewModel beleg in _belege)
+            {
+                beleg.IsSelected = false;
             }
         }
 

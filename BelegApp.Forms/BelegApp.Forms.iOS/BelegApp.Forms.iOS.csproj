@@ -171,16 +171,52 @@
     <BundleResource Include="Resources\money.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\ABGELEHNT.png" />
+    <BundleResource Include="Resources\ABGELEHNT.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\ERFASST.png" />
+    <BundleResource Include="Resources\ERFASST.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\EXPORTIERT.png" />
+    <BundleResource Include="Resources\EXPORTIERT.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\GEBUCHT.png" />
+    <BundleResource Include="Resources\GEBUCHT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\buttons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\listbackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\old.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rectangle_background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\select.png" />
   </ItemGroup>
   <Import Project="..\BelegApp.Forms\BelegApp.Forms.projitems" Label="Shared" Condition="Exists('..\BelegApp.Forms\BelegApp.Forms.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
