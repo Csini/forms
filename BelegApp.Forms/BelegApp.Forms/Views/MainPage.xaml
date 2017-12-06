@@ -16,7 +16,7 @@
     </ContentPage.Title>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Neu" Command="{Binding AddNewBelegCommand}" Icon="new.png"></ToolbarItem>
+        <ToolbarItem Name="Neu" Command="{Binding AddNewBelegCommand}" Icon="add.png"></ToolbarItem>
         <ToolbarItem Name="Auswählen" Command="{Binding SelectBelegeCommand}" Icon="select.png"></ToolbarItem>
         <ToolbarItem Name="Exportieren" Command="{Binding ExportBelegeCommand}" Icon="export.png"></ToolbarItem>
         <ToolbarItem Name="Löschen" Command="{Binding DeleteBelegeCommand}" Icon="delete.png"></ToolbarItem>

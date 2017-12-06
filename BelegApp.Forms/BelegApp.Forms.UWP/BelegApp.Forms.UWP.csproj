@@ -110,8 +110,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ABGELEHNT.png" />
+    <Content Include="add.png" />
     <Content Include="buttons.png" />
+    <Content Include="delete.png" />
     <Content Include="ERFASST.png" />
+    <Content Include="export.png" />
     <Content Include="EXPORTIERT.png" />
     <Content Include="GEBUCHT.png" />
     <Content Include="listbackground.jpg" />
@@ -144,6 +147,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="refresh.png" />
+    <Content Include="select.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
