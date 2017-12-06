@@ -2,6 +2,7 @@
 using BelegApp.Forms.Utils;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -70,10 +71,10 @@ namespace BelegApp.Forms.Services
                 throw new ArgumentNullException(nameof(beleg));
             }
 
-            int result = await WebRequester.HttpPost<Beleg, int>(
+            int result = await WebRequester.HttpPost<Beleg, IntReturn>(
                 serviceBaseUrl,
                 string.Format("/{0}", user),
-                beleg);
+                beleg).ContinueWith((t) => t.Result.Value.Value);
             return result;
         }
 
@@ -165,5 +166,12 @@ namespace BelegApp.Forms.Services
             }
             await Task.WhenAll(tasks);
         }
+    }
+
+    class IntReturn
+    {
+        [DataMember(Name = "value", EmitDefaultValue = false)]
+        public int? Value { get; set; }
+
     }
 }

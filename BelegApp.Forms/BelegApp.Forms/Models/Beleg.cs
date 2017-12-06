@@ -209,6 +209,7 @@ namespace BelegApp.Forms.Models
             var sb = new StringBuilder();
             sb.Append("class Beleg {\n");
             sb.Append("  Belegnummer: ").Append(Belegnummer).Append("\n");
+            sb.Append("  Label: ").Append(Label).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Date: ").Append(Date).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
@@ -258,10 +259,15 @@ namespace BelegApp.Forms.Models
                     this.Belegnummer.Equals(other.Belegnummer)
                 ) && 
                 (
+                    this.Label == other.Label ||
+                    this.Label != null &&
+                    this.Label.Equals(other.Label)
+                ) &&
+                (
                     this.Description == other.Description ||
                     this.Description != null &&
                     this.Description.Equals(other.Description)
-                ) && 
+                ) &&
                 (
                     this.Date == other.Date ||
                     this.Date != null &&
@@ -302,6 +308,8 @@ namespace BelegApp.Forms.Models
                 // Suitable nullity checks etc, of course :)
                 if (this.Belegnummer != null)
                     hash = hash * 59 + this.Belegnummer.GetHashCode();
+                if (this.Label != null)
+                    hash = hash * 59 + this.Label.GetHashCode();
                 if (this.Description != null)
                     hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Date != null)

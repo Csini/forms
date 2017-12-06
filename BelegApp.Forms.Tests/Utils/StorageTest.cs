@@ -37,7 +37,7 @@ namespace BelegApp.Forms.Tests.Utils
         [TestMethod]
         public void InitialStoreShouldResultInOneElementList()
         {
-            Beleg beleg = new Beleg(null, "Testbeleg", DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
+            Beleg beleg = new Beleg(null, "Testbeleg", null, DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
             int nr = database.StoreBeleg(beleg).Result;
             Models.Beleg[] result = database.GetBelege().Result;
             Assert.AreEqual(1, result.Length, result.ToString());
@@ -46,7 +46,7 @@ namespace BelegApp.Forms.Tests.Utils
         [TestMethod]
         public void InitialStoreShouldResultInBeleg()
         {
-            Beleg beleg = new Beleg(null, "Testbeleg", DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
+            Beleg beleg = new Beleg(null, "Testbeleg", null, DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
             database.StoreBeleg(beleg).Wait();
             Assert.IsNotNull(database.GetBeleg(beleg.Belegnummer.Value).Result);
         }
@@ -54,7 +54,7 @@ namespace BelegApp.Forms.Tests.Utils
         [TestMethod]
         public void DeleteAfterStoreShouldBeEmpty()
         {
-            Beleg beleg = new Beleg(null, "Testbeleg", DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
+            Beleg beleg = new Beleg(null, "Testbeleg", null, DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
             database.StoreBeleg(beleg).Wait();
             Models.Beleg[] result = database.GetBelege().Result;
             Assert.AreEqual(1, result.Length, result.ToString());
@@ -65,7 +65,7 @@ namespace BelegApp.Forms.Tests.Utils
         [TestMethod]
         public void ConsecutiveStoreShouldChangeBeleg()
         {
-            Beleg beleg = new Beleg(null, "Testbeleg", DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
+            Beleg beleg = new Beleg(null, "Testbeleg", null, DateTime.UtcNow.Date, "Test", 100, Beleg.StatusEnum.ERFASST, null, null);
             database.StoreBeleg(beleg).Wait();
             beleg = database.GetBeleg(beleg.Belegnummer.Value).Result;
             Assert.AreEqual("Testbeleg", beleg.Description);
