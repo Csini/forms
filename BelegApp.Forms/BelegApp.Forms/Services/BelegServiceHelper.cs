@@ -23,9 +23,32 @@ namespace BelegApp.Forms.Services
             this.database = database;
         }
 
-        public Task<int> ExportBelege(Beleg[] belege)
+        public async Task ExportBelege(Beleg[] belege)
         {
-            throw new NotImplementedException();
+            if (belege != null)
+            {
+                var tasks = new List<Task>();
+                foreach (Beleg beleg in belege)
+                {
+                    tasks.Add(ExportBeleg(beleg));
+                }
+                await Task.WhenAll(tasks);
+            }
+        }
+
+        internal async Task ExportBeleg(Beleg beleg)
+        {
+            beleg.Belegnummer = await BelegService.CreateBeleg(BelegService.USER, beleg);
+
+            if (!beleg.Belegnummer.HasValue)
+            {
+                throw new Exception("Vermisse Beleg-ID!");
+            }
+
+            await BelegService.SaveBelegImage(BelegService.USER, beleg.Belegnummer.Value, beleg.Image);
+
+            beleg.Status = Beleg.StatusEnum.EXPORTIERT;
+            await database.StoreBeleg(beleg);
         }
 
         public Task<int> RefreshStatus()
