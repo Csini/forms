@@ -21,7 +21,7 @@ namespace BelegApp.Forms.Views
             InitializeComponent();
 
             // ViewModel initialisieren
-            getBelegList().Wait();
+            getDatabaseBelegList().Wait();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -54,7 +54,7 @@ namespace BelegApp.Forms.Views
                 try
                 {
                     // ViewModel initialisieren
-                    getBelegList().Wait();
+                    refreshBelegList().Wait();
                 }
                 finally
                 {
@@ -64,12 +64,21 @@ namespace BelegApp.Forms.Views
             }
         }
 
-        private async Task getBelegList()
+        private async Task getDatabaseBelegList()
         {
-            // Belegliste online holen
-            Beleg[] belegList = await BelegService.GetBelegList(BelegService.USER);
+            // Belegliste aus der Datenbank holen
+            Beleg[] belegList = new Storage().GetBelege().Result;
             BelegMasterViewModel viewModel = new BelegMasterViewModel(this.Navigation, belegList);
             this.BindingContext = viewModel;
+        }
+
+        private async Task refreshBelegList()
+        {
+            // Belegliste in Datenbank mit Online-Belegen aktualisieren
+            new BelegServiceHelper().RefreshStatus().Wait();
+
+            // Belegliste aus der Datenbank erneut lesen und anzeigen
+            getDatabaseBelegList().Wait();
         }
     }
 }
