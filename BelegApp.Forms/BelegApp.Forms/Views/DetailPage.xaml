@@ -32,7 +32,7 @@
                 <!--<Label Text="{Binding Description.FirstError, Converter={StaticResource firstValidationErrorConverter}}" />-->
 
                 <!-- Belegtyp -->
-                <Picker Title="Art" SelectedItem="{Binding Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
+                <Picker Title="Art" SelectedItem="{Binding Path=Type, Mode=TwoWay}" ItemsSource="{Binding Types}" />
                 <Label Text="{Binding ValidatableType.FirstError}" TextColor="DarkRed" FontSize="Micro"/>
 
                 <!-- Betrag -->
