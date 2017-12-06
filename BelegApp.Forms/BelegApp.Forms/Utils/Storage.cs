@@ -66,6 +66,15 @@ namespace BelegApp.Forms.Utils
             }
             return database.InsertOrReplaceAsync(beleg);
         }
+        public async Task RemoveBelege(Beleg[] belege)
+        {
+            List<Task<int>> tasks = new List<Task<int>>();
+            foreach (Beleg beleg in belege)
+            {
+                tasks.Add(RemoveBeleg(beleg));
+            }
+            await Task.WhenAll(tasks);
+        }
 
         public Task<int> RemoveBeleg(Beleg beleg)
         {
